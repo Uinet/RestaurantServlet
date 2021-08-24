@@ -29,7 +29,7 @@
                             </li>
                         </ul>
                     </div>
-                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/login';">Login</button>
+                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/api/app/login';">Login</button>
                     <button type="button" class="btn btn-warning" onclick="location.href='/registration';">Sign-in</button>
                     <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout';">Logout</button>
                 </div>

@@ -56,7 +56,7 @@ public class User {
         this.money = money;
     }
 
-    public Builder builder(){
+    public static Builder builder(){
         return new Builder();
     }
 
@@ -71,7 +71,7 @@ public class User {
         this.money = money;
     }
 
-    private static class Builder{
+    public static class Builder{
         private final User user = new User();
 
         public Builder id(Long id){
