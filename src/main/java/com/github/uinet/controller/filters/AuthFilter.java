@@ -1,8 +1,5 @@
 package com.github.uinet.controller.filters;
 
-import com.github.uinet.dao.DAOFactory;
-import com.github.uinet.dao.imp.UserDAOImp;
-import com.github.uinet.model.User;
 import com.github.uinet.model.UserRole;
 
 import javax.servlet.*;
@@ -10,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
-import static java.util.Objects.nonNull;
 
 public class AuthFilter implements Filter {
     @Override
@@ -30,7 +25,21 @@ public class AuthFilter implements Filter {
         HttpSession session = req.getSession();
         ServletContext context = req.getSession().getServletContext();
 
-        filterChain.doFilter(req,res);
+        UserRole role = (UserRole) session.getAttribute("role");
+        if(role == null){
+            role = UserRole.GUEST;
+            session.setAttribute("role", role);
+        }
+
+        System.out.println("AuthFilter user role:" +role);
+        System.out.println("AuthFilter request URI:" + req.getRequestURI());
+        if(role.equals(UserRole.GUEST) && (req.getRequestURI().contains("admin") || req.getRequestURI().contains("user"))) {
+            res.sendRedirect("/api/");
+        }else if(role.equals(UserRole.CLIENT) && req.getRequestURI().contains("admin")){
+            res.sendRedirect("/api/");
+        }else {
+            filterChain.doFilter(req,res);
+        }
     }
 
     @Override

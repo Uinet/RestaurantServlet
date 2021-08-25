@@ -23,8 +23,8 @@ public class Servlet extends HttpServlet {
         commands.put("exception" , new ExceptionCommand());
         commands.put("admin/orders", new OrdersCommand());
         commands.put("admin/users", new UsersCommand());
-        commands.put("myorders", new MyOrdersCommand());
-        commands.put("menu", new MenuCommand());
+        commands.put("user/myorders", new MyOrdersCommand());
+        commands.put("user/menu", new MenuCommand());
     }
 
     @Override

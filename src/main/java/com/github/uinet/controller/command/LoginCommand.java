@@ -38,9 +38,9 @@ public class LoginCommand implements Command{
         CommandUtility.setUserRole(request, role, username);
 
         if(role.equals(UserRole.MANAGER)){
-            return "/WEB-INF/admin/orders.jsp";
+            return "redirect:/app/admin/orders";
         } else if(role.equals(UserRole.CLIENT)){
-            return "/WEB-INF/user/menu.jsp";
+            return "redirect:/app/user/menu";
         } else {
             return "/login.jsp";
         }

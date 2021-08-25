@@ -31,6 +31,15 @@
     </tr>
     </thead>
     <tbody>
+        <c:forEach var="user" items="${users}">
+            <tr>
+                <th scope="row">${user.getId()}</th>
+                <td>${user.getName()}</td>
+                <td>${user.getUsername()}</td>
+                <td>${user.getRole()}</td>
+                <td>${user.getMoney()}</td>
+            </tr>
+        </c:forEach>
     </tbody>
 </table>
 </div>

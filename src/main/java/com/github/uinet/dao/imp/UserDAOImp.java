@@ -5,12 +5,12 @@ import com.github.uinet.model.User;
 import com.github.uinet.model.UserRole;
 
 import java.sql.*;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class UserDAOImp implements UserDAO {
 
     private static final String SQL_SELECT_USER_BY_USERNAME = "SELECT * FROM users WHERE username=?";
+    private static final String SQL_SELECT_ALL_USER = "SELECT * FROM users";
     private static final String SQL_CREATE_USER = "INSERT INTO users (name, password, username, money, role) VALUES (?, ?, ?, ?, ?)";
 
     private Connection connection;
@@ -72,7 +72,17 @@ public class UserDAOImp implements UserDAO {
 
     @Override
     public List<User> findAll() {
-        return null;
+        List<User> resultList = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_USER)){
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while ( resultSet.next() ){
+                User result = extractFromResultSet(resultSet);
+                resultList.add(result);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return resultList;
     }
 
     @Override
