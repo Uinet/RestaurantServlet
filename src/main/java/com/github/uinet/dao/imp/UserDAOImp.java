@@ -4,16 +4,14 @@ import com.github.uinet.dao.UserDAO;
 import com.github.uinet.model.User;
 import com.github.uinet.model.UserRole;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
 public class UserDAOImp implements UserDAO {
 
-    private static final String SQL_SELECT_USER_BY_USERNAME = "SELECT * FROM users INNER JOIN user_role ON users.id = user_role.user_id WHERE username=?";
+    private static final String SQL_SELECT_USER_BY_USERNAME = "SELECT * FROM users WHERE username=?";
+    private static final String SQL_CREATE_USER = "INSERT INTO users (name, password, username, money, role) VALUES (?, ?, ?, ?, ?)";
 
     private Connection connection;
 
@@ -36,8 +34,7 @@ public class UserDAOImp implements UserDAO {
 
     public Optional<User> getUserByUsername(String username){
         Optional<User> user = Optional.empty();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_BY_USERNAME);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_USER_BY_USERNAME)){
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -51,7 +48,21 @@ public class UserDAOImp implements UserDAO {
 
     @Override
     public void create(User entity) {
+        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_USER, Statement.RETURN_GENERATED_KEYS)){
+            preparedStatement.setString(1, entity.getName());
+            preparedStatement.setString(2, entity.getPassword());
+            preparedStatement.setString(3, entity.getUsername());
+            preparedStatement.setDouble(4, entity.getMoney());
+            preparedStatement.setString(5, entity.getRole().toString());
+            preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if(rs.next()){
+                entity.setId(rs.getLong(1));
+            }
 
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -76,6 +87,6 @@ public class UserDAOImp implements UserDAO {
 
     @Override
     public void close() throws Exception {
-
+        connection.close();
     }
 }

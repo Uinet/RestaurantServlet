@@ -11,8 +11,8 @@ import java.util.Optional;
 public class LoginCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
-        String username = request.getParameter("name");
-        String password = request.getParameter("pass");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         System.out.println(username + " " + password);
         if( username == null || username.equals("") || password == null || password.equals("")  ){
             return "/login.jsp";

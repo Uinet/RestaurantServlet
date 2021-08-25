@@ -8,9 +8,8 @@ public class LogOutCommand implements Command{
     public String execute(HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        session.removeAttribute("password");
-        session.removeAttribute("login");
         session.removeAttribute("role");
+        session.getServletContext().removeAttribute("username");
 
         return "redirect:/index.jsp";
     }

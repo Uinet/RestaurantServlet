@@ -23,15 +23,15 @@
                                     ENG
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item">Eng</a></li>
-                                    <li><a class="dropdown-item">Ua</a></li>
+                                    <li><a href="?lang=en" class="dropdown-item">Eng</a></li>
+                                    <li><a href="?lang=ua" class="dropdown-item">Ua</a></li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                     <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/api/app/login';">Login</button>
-                    <button type="button" class="btn btn-warning" onclick="location.href='/registration';">Sign-in</button>
-                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout';">Logout</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/api/app/registration';">Sign-in</button>
+                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/api/app/logout';">Logout</button>
                 </div>
             </div>
         </div>

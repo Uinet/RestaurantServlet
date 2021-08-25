@@ -12,7 +12,7 @@ public class CommandUtility {
                             UserRole role, String name) {
         HttpSession session = request.getSession();
         ServletContext context = request.getSession().getServletContext();
-        context.setAttribute("userName", name);
+        context.setAttribute("username", name);
         session.setAttribute("role", role);
     }
 
