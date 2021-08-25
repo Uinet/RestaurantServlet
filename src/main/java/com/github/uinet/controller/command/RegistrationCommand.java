@@ -2,7 +2,7 @@ package com.github.uinet.controller.command;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class Registration implements Command{
+public class RegistrationCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
 

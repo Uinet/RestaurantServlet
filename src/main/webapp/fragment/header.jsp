@@ -8,11 +8,11 @@
 
             <div class="collapse navbar-collapse" id="navbarsExample03">
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
-                    <li><a href="/menu" class="nav-link px-2 text-white">Menu</a></li>
-                    <li><a href="/myorders" class="nav-link px-2 text-white">My order</a></li>
-                    <li><a href="/admin/orders" class="nav-link px-2 text-white">Orders</a></li>
-                    <li><a href="/admin/users" class="nav-link px-2 text-white">Users</a></li>
+                    <li><a href="/api/" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="/api/app/menu" class="nav-link px-2 text-white">Menu</a></li>
+                    <li><a href="/api/app/myorders" class="nav-link px-2 text-white">My order</a></li>
+                    <li><a href="/api/app/admin/orders" class="nav-link px-2 text-white">Orders</a></li>
+                    <li><a href="/api/app/admin/users" class="nav-link px-2 text-white">Users</a></li>
                 </ul>
                 <div class="text-end">
                     <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">

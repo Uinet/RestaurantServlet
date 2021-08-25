@@ -1,6 +1,6 @@
 package com.github.uinet.controller;
 
-import com.github.uinet.controller.command.Exception;
+import com.github.uinet.controller.command.ExceptionCommand;
 import com.github.uinet.controller.command.*;
 
 import javax.servlet.ServletException;
@@ -13,14 +13,18 @@ import java.util.Map;
 
 public class Servlet extends HttpServlet {
     private static final String regexPatch = ".*/app/";
-    private Map<String, Command> commands = new HashMap<>();
+    private final Map<String, Command> commands = new HashMap<>();
 
     @Override
     public void init(){
-        commands.put("logout", new LogOut());
-        commands.put("login", new Login());
-        commands.put("registration", new Registration());
-        commands.put("exception" , new Exception());
+        commands.put("logout", new LogOutCommand());
+        commands.put("login", new LoginCommand());
+        commands.put("registration", new RegistrationCommand());
+        commands.put("exception" , new ExceptionCommand());
+        commands.put("admin/orders", new OrdersCommand());
+        commands.put("admin/users", new UsersCommand());
+        commands.put("myorders", new MyOrdersCommand());
+        commands.put("menu", new MenuCommand());
     }
 
     @Override

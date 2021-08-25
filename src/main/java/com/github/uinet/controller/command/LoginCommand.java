@@ -8,7 +8,7 @@ import com.github.uinet.model.UserRole;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
-public class Login implements Command{
+public class LoginCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
         String username = request.getParameter("name");
@@ -22,6 +22,8 @@ public class Login implements Command{
         Optional<User> userOptional = userDao.getUserByUsername(username);
 
         UserRole role = UserRole.GUEST;
+
+        //TODO password_encryption
 
         if(userOptional.isPresent()){
             if(userOptional.get().getPassword().equals(password)){
