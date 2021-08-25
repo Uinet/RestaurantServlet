@@ -1,9 +1,6 @@
 package com.github.uinet.dao;
 
-import com.github.uinet.dao.imp.DAOFactoryImp;
-import com.github.uinet.dao.imp.DishDAOImp;
-import com.github.uinet.dao.imp.OrderDAOImp;
-import com.github.uinet.dao.imp.UserDAOImp;
+import com.github.uinet.dao.imp.*;
 
 import static java.util.Objects.isNull;
 
@@ -13,6 +10,7 @@ public abstract class DAOFactory {
     public abstract UserDAOImp createUserDao();
     public abstract DishDAOImp createDishDao();
     public abstract OrderDAOImp createOrderDao();
+    public abstract OrderDishDAOImp createOrderDishDao();
 
     public static DAOFactory getInstance(){
         if(isNull(daoFactory)){

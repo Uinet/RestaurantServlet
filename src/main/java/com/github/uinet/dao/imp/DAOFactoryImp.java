@@ -9,4 +9,5 @@ public class DAOFactoryImp extends DAOFactory {
     }
     public DishDAOImp createDishDao(){return new DishDAOImp(ConnectionCreator.createConnection());}
     public OrderDAOImp createOrderDao(){return new OrderDAOImp(ConnectionCreator.createConnection());}
+    public OrderDishDAOImp createOrderDishDao() {return new OrderDishDAOImp(ConnectionCreator.createConnection());}
 }

@@ -1,12 +1,8 @@
 package com.github.uinet.dao.imp;
 
-import com.github.uinet.dao.DAOFactory;
 import com.github.uinet.dao.OrderDAO;
 import com.github.uinet.model.Order;
-import com.github.uinet.model.User;
-import com.github.uinet.model.UserRole;
 
-import javax.jws.soap.SOAPBinding;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,13 +21,7 @@ public class OrderDAOImp implements OrderDAO {
     }
 
     private Order extractFromResultSet(ResultSet resultSet) throws SQLException {
-        return Order.builder()
-                .id(resultSet.getLong("id"))
-                .customer(DAOFactory.getInstance()
-                        .createUserDao()
-                        .findById(resultSet.getLong("user_id"))
-                        .get())
-                .build();
+        return new Order();
     }
 
     @Override
