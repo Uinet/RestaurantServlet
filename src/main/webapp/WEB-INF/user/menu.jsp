@@ -46,18 +46,20 @@
         <div class="row">
             <div class="col-9">
                 <div class="row">
-                    <div class="card col-3" style="width: 18rem;">
-                        <img class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text"></p>
-                            <p class="card-text"></p>
-                            <p class="card-text"></p>
-                            <form method="post">
-                                <button class="btn btn-primary"><fmt:message key="menu.buy" /></button>
-                            </form>
+                    <c:forEach var="dish" items="${dishes}">
+                        <div class="card col-3" style="width: 18rem;">
+                            <img class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">${dish.getName()}</h5>
+                                <p class="card-text">${dish.getCategory()}</p>
+                                <p class="card-text">${dish.getDescription()}</p>
+                                <p class="card-text">${dish.getPrice()}</p>
+                                <form method="post">
+                                    <button class="btn btn-primary"><fmt:message key="menu.buy" /></button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                    </c:forEach>
                 </div>
             </div>
             <div class="col-3">

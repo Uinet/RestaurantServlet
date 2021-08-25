@@ -20,7 +20,7 @@ public class UserDAOImp implements UserDAO {
     }
 
     private User extractFromResultSet(ResultSet resultSet) throws SQLException {
-        User result = User.builder()
+        return User.builder()
                 .id(resultSet.getLong("id"))
                 .name(resultSet.getString("name"))
                 .password(resultSet.getString("password"))
@@ -28,8 +28,6 @@ public class UserDAOImp implements UserDAO {
                 .username(resultSet.getString("username"))
                 .role(UserRole.valueOf(resultSet.getString("role")))
                 .build();
-
-        return result;
     }
 
     public Optional<User> getUserByUsername(String username){
@@ -66,7 +64,7 @@ public class UserDAOImp implements UserDAO {
     }
 
     @Override
-    public Optional<User> findById(User entity) {
+    public Optional<User> findById(Long userId) {
         return Optional.empty();
     }
 

@@ -47,7 +47,7 @@ public class Dish {
         this.description = description;
     }
 
-    public Builder builder(){
+    public static Builder builder(){
         return new Builder();
     }
 
@@ -61,7 +61,7 @@ public class Dish {
         this.description = description;
     }
 
-    private static class Builder{
+    public static class Builder{
         private final Dish dish = new Dish();
 
         public Builder id(Long id){

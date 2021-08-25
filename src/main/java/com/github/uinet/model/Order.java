@@ -43,7 +43,7 @@ public class Order {
         this.dishes = dishes;
     }
 
-    public Builder builder(){
+    public static Builder builder(){
         return new Builder();
     }
 
@@ -56,7 +56,7 @@ public class Order {
         this.dishes = dishes;
     }
 
-    private static class Builder{
+    public static class Builder{
         private final Order order = new Order();
 
         public Builder id(Long id){
