@@ -33,8 +33,8 @@ public class DishDAOImp implements DishDAO {
     }
 
     @Override
-    public void create(Dish entity) {
-
+    public Dish create(Dish entity) {
+        return null;
     }
 
     @Override
@@ -70,5 +70,9 @@ public class DishDAOImp implements DishDAO {
     @Override
     public void close() throws Exception {
 
+    }
+
+    public List<Dish> findAllByCategory(DishCategory dishCategory) {
+        return new ArrayList<>();
     }
 }

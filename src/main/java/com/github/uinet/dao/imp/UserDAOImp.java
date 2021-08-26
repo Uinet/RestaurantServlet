@@ -45,7 +45,7 @@ public class UserDAOImp implements UserDAO {
     }
 
     @Override
-    public void create(User entity) {
+    public User create(User entity) {
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_USER, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getPassword());
@@ -61,6 +61,8 @@ public class UserDAOImp implements UserDAO {
         }catch (SQLException ex){
             ex.printStackTrace();
         }
+
+        return entity;
     }
 
     @Override

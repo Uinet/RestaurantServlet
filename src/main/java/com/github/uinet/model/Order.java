@@ -9,7 +9,8 @@ public class Order {
     private Long id;
     private LocalDateTime creationDate;
     private User customer;
-    private List<Dish> dishes;
+    private List<OrderDish> orderDishes;
+    private OrderStatus status;
 
     public Long getId() {
         return id;
@@ -35,12 +36,20 @@ public class Order {
         this.customer = customer;
     }
 
-    public List<Dish> getDishes() {
-        return dishes;
+    public List<OrderDish> getOrderDishes() {
+        return orderDishes;
     }
 
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
+    public void setOrderDishes(List<OrderDish> orderDishes) {
+        this.orderDishes = orderDishes;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     public static Builder builder(){
@@ -49,11 +58,11 @@ public class Order {
 
     public Order(){}
 
-    public Order(Long id, LocalDateTime creationDate, User customer, List<Dish> dishes) {
+    public Order(Long id, LocalDateTime creationDate, User customer, List<OrderDish> orderDishes) {
         this.id = id;
         this.creationDate = creationDate;
         this.customer = customer;
-        this.dishes = dishes;
+        this.orderDishes = orderDishes;
     }
 
     public static class Builder{
@@ -74,8 +83,8 @@ public class Order {
             return this;
         }
 
-        public Builder dish(List<Dish> dishes){
-            order.setDishes(dishes);
+        public Builder orderDishes(List<OrderDish> orderDishes){
+            order.setOrderDishes(orderDishes);
             return this;
         }
 

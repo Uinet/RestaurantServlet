@@ -6,6 +6,7 @@ import com.github.uinet.model.Order;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,8 @@ public class OrderDAOImp implements OrderDAO {
     }
 
     @Override
-    public void create(Order entity) {
-
+    public Order create(Order entity) {
+        return null;
     }
 
     @Override
@@ -52,5 +53,9 @@ public class OrderDAOImp implements OrderDAO {
     @Override
     public void close() throws Exception {
 
+    }
+
+    public List<Order> findAllByUserId(Long id) {
+        return new ArrayList<>();
     }
 }

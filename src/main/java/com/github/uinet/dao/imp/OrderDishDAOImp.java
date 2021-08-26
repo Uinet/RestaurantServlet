@@ -16,8 +16,8 @@ public class OrderDishDAOImp implements OrderDishDAO {
     }
 
     @Override
-    public void create(OrderDish entity) {
-
+    public OrderDish create(OrderDish entity) {
+        return null;
     }
 
     @Override
@@ -43,5 +43,8 @@ public class OrderDishDAOImp implements OrderDishDAO {
     @Override
     public void close() throws Exception {
 
+    }
+
+    public void saveAll(List<OrderDish> collect) {
     }
 }
