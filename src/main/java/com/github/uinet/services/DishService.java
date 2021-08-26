@@ -11,7 +11,7 @@ import java.util.Optional;
 public class DishService {
     private final DishDAOImp dishDAOImp = DAOFactory.getInstance().createDishDao();
 
-    public Optional<Dish> findDishById(Long id){
+    public Dish findDishById(Long id){
         return dishDAOImp.findById(id);
     }
 

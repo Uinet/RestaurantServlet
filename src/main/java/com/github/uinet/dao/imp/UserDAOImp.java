@@ -4,6 +4,7 @@ import com.github.uinet.dao.UserDAO;
 import com.github.uinet.model.User;
 import com.github.uinet.model.UserRole;
 
+import javax.jws.soap.SOAPBinding;
 import java.sql.*;
 import java.util.*;
 
@@ -45,7 +46,7 @@ public class UserDAOImp implements UserDAO {
     }
 
     @Override
-    public User create(User entity) {
+    public User create(User entity) throws SQLException {
         try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_USER, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getPassword());
@@ -57,17 +58,14 @@ public class UserDAOImp implements UserDAO {
             if(rs.next()){
                 entity.setId(rs.getLong(1));
             }
-
-        }catch (SQLException ex){
-            ex.printStackTrace();
         }
 
         return entity;
     }
 
     @Override
-    public Optional<User> findById(Long userId) {
-        return Optional.empty();
+    public User findById(Long userId) {
+        return new User();
     }
 
     @Override

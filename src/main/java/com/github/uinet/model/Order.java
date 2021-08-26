@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Order {
     private Long id;
-    private LocalDateTime creationDate;
     private User customer;
     private List<OrderDish> orderDishes;
     private OrderStatus status;
@@ -18,14 +17,6 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
     }
 
     public User getCustomer() {
@@ -60,7 +51,6 @@ public class Order {
 
     public Order(Long id, LocalDateTime creationDate, User customer, List<OrderDish> orderDishes) {
         this.id = id;
-        this.creationDate = creationDate;
         this.customer = customer;
         this.orderDishes = orderDishes;
     }
@@ -70,11 +60,6 @@ public class Order {
 
         public Builder id(Long id){
             order.setId(id);
-            return this;
-        }
-
-        public Builder creationDate(LocalDateTime creationDate){
-            order.setCreationDate(creationDate);
             return this;
         }
 

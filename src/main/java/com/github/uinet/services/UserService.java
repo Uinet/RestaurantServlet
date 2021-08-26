@@ -2,6 +2,7 @@ package com.github.uinet.services;
 
 import com.github.uinet.dao.DAOFactory;
 import com.github.uinet.dao.imp.UserDAOImp;
+import com.github.uinet.exception.UserException;
 import com.github.uinet.model.User;
 
 import java.util.Optional;
@@ -15,11 +16,15 @@ public class UserService {
         });
     }
 
-    public Optional<User> registerNewUser(User user) throws Exception {
+    public Optional<User> registerNewUser(User user) throws UserException {
         try {
             return Optional.of(userDAOImp.create(user));
         }catch (Exception exception){
-            throw new Exception("User is exist " + exception.getMessage());
+            throw new UserException("User is exist " + exception.getMessage());
         }
+    }
+
+    public User loadUserById(Long userId) {
+        return userDAOImp.findById(userId);
     }
 }

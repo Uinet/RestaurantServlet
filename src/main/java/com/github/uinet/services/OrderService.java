@@ -8,7 +8,6 @@ import com.github.uinet.model.OrderStatus;
 import com.github.uinet.model.User;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class OrderService {
@@ -23,17 +22,16 @@ public class OrderService {
         return orderDAOImp.findAllByUserId(user.getId());
     }
 
-    public Optional<Order> findById(Long id){
+    public Order findById(Long id){
         return orderDAOImp.findById(id);
     }
 
-    public OrderStatus changeStatus(Long id, OrderStatus status){
-        Optional<Order> order = orderDAOImp.findById(id);
-        if(order.isPresent()){
-            order.get().setStatus(status);
-            orderDAOImp.create(order.get());
+    public void changeStatus(Long id, OrderStatus status){
+        Order order = orderDAOImp.findById(id);
+        if(order != null){
+            order.setStatus(status);
+            orderDAOImp.update(order);
         }
-        return order.get().getStatus();
     }
 
     public Order save(Order orders){

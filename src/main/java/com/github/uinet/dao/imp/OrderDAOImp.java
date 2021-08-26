@@ -1,14 +1,15 @@
 package com.github.uinet.dao.imp;
 
+import com.github.uinet.dao.DAOFactory;
 import com.github.uinet.dao.OrderDAO;
 import com.github.uinet.model.Order;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class OrderDAOImp implements OrderDAO {
 
@@ -22,7 +23,11 @@ public class OrderDAOImp implements OrderDAO {
     }
 
     private Order extractFromResultSet(ResultSet resultSet) throws SQLException {
-        return new Order();
+        return Order.builder()
+                .customer(DAOFactory.getInstance().createUserDao().findById(resultSet.getLong("user_id")))
+                .id(resultSet.getLong("id"))
+                .orderDishes(DAOFactory.getInstance().createOrderDishDao().findByOrderId(resultSet.getLong("id")))
+                .build();
     }
 
     @Override
@@ -31,13 +36,23 @@ public class OrderDAOImp implements OrderDAO {
     }
 
     @Override
-    public Optional<Order> findById(Long orderId) {
-        return Optional.empty();
+    public Order findById(Long orderId) {
+        return new Order();
     }
 
     @Override
     public List<Order> findAll() {
-        return null;
+        List<Order> resultList = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_ORDERS)){
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while ( resultSet.next() ){
+                Order result = extractFromResultSet(resultSet);
+                resultList.add(result);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return resultList;
     }
 
     @Override
