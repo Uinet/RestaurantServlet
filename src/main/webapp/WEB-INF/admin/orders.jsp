@@ -39,15 +39,15 @@
                     <th scope="row">${order.getId()}</th>
                     <th>${order.getStatus()}</th>
                     <th></th>
-                    <th>${order.getCustomer().getName()}</th>
+                    <th>${order.getCustomerId()}</th>
                     <th>
                         <ul>
-                            <c:forEach var="orderDish" items="${order.getOrderDishes()}">
+                            <c:forEach var="orderDish" items="${orderDishService.getOrderDishesByOrderId(order.getId())}">
                                 <li>${orderDish.getDish().getName()} - ${orderDish.getQuantities()}</li>
                             </c:forEach>
                         </ul>
                     </th>
-                    <th>${order.getSum()}</th>
+                    <th></th>
                 </tr>
             </c:forEach>
             </tbody>
