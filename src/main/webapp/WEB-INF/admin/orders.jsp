@@ -49,22 +49,22 @@
                     </th>
                     <th>${order.getSum()}</th>
                     <td>
-                        <form method="post" action="/app/user/orders/changeStatus?orderId=${order.getId()}?status=cooked)}">
+                        <form method="post" action="/api/app/admin/orders/changeStatus?orderId=${order.getId()}&status=cooked">
                             <button type="submit" ${(order.getStatus() ne 'NEW') ? 'disabled' : ''} class="btn btn-primary"><fmt:message key="orders.cooking" /></button>
                         </form>
                     </td>
                     <td>
-                        <form method="post" action="/app/user/orders/changeStatus?orderId=${order.getId()}?status=delivered)}">
+                        <form method="post" action="/api/app/admin/orders/changeStatus?orderId=${order.getId()}&status=delivered">
                             <button type="submit" ${(order.getStatus() ne 'COOKED') ? 'disabled': ''} class="btn btn-secondary"><fmt:message key="orders.deliver" /></button>
                         </form>
                     </td>
                     <td>
-                        <form method="post" action="/app/user/orders/changeStatus?orderId=${order.getId()}?status=closed)}">
+                        <form method="post" action="/api/app/admin/orders/changeStatus?orderId=${order.getId()}&status=closed">
                             <button type="submit" ${(order.getStatus() ne 'PAID') ? 'disabled': ''} class="btn btn-success"><fmt:message key="orders.complete" /></button>
                         </form>
                     </td>
                     <td>
-                        <form method="post" action="/app/user/orders/changeStatus?orderId=${order.getId()}?status=canceled)}">
+                        <form method="post" action="/api/app/admin/orders/changeStatus?orderId=${order.getId()}&status=canceled">
                             <button type="submit" ${(order.getStatus() eq 'CLOSED') ? 'disabled': ''} class="btn btn-danger"><fmt:message key="orders.cancel" /></button>
                         </form>
                     </td>
