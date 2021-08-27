@@ -1,7 +1,6 @@
 package com.github.uinet.model;
 
 import com.github.uinet.services.DishService;
-import com.github.uinet.services.OrderService;
 
 public class OrderDish {
     private long id;
@@ -33,21 +32,9 @@ public class OrderDish {
         this.dishId = dishId;
     }
 
-    public Order getOrder() {
-        return new OrderService().findById(orderId);
-    }
-
-    public void setOrder(Order order) {
-        System.out.println(order.getId());
-        this.orderId = order.getId();
-    }
-
+    //TODO remove this method
     public Dish getDish() {
         return new DishService().findDishById(dishId);
-    }
-
-    public void setDish(Dish dish) {
-        this.dishId = dish.getId();
     }
 
     public int getQuantities() {
@@ -82,16 +69,6 @@ public class OrderDish {
 
         public Builder id(long id){
             orderDish.setId(id);
-            return this;
-        }
-
-        public Builder order(Order order){
-            orderDish.setOrder(order);
-            return this;
-        }
-
-        public Builder dish(Dish dish){
-            orderDish.setDish(dish);
             return this;
         }
 

@@ -18,8 +18,8 @@ public class CreateOrderCommand implements Command{
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Order order = new OrderService().save(Order.builder()
-                .customer(new UserService()
-                        .loadUserByUsername((String) session.getServletContext().getAttribute("username")))
+                .customerId(new UserService()
+                        .loadUserByUsername((String) session.getServletContext().getAttribute("username")).getId())
                 .status(OrderStatus.NEW)
                 .build());
 

@@ -12,18 +12,6 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class OrderDishService {
     private final OrderDishDAOImp orderDishDAOImp = DAOFactory.getInstance().createOrderDishDao();
 
-    public OrderDish createOrderDish(Dish dish, Order order) throws SQLIntegrityConstraintViolationException {
-        return orderDishDAOImp.create(OrderDish.builder()
-                .dish(dish)
-                .order(order)
-                .quantities(1)
-                .build());
-    }
-
-    public void updateOrderDish(OrderDish orderDish){
-        orderDishDAOImp.update(orderDish);
-    }
-
     public List<OrderDish> getOrderDishesByOrderId(long orderId){
         return orderDishDAOImp.findByOrderId(orderId);
     }
@@ -32,8 +20,7 @@ public class OrderDishService {
         System.out.println(order);
         for (OrderDish orderDish: orderDishes) {
             System.out.println(order);
-            orderDish.setOrder(order);
-            System.out.println(orderDish.getOrder());
+            orderDish.setOrderId(order.getId());
             orderDishDAOImp.create(orderDish);
         }
     }

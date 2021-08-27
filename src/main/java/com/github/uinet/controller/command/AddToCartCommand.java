@@ -23,13 +23,13 @@ public class AddToCartCommand implements Command{
             session.setAttribute("orderDishes", orderDishList);
         }
 
-        Optional<OrderDish> orderDish = orderDishList.stream().filter(orderD-> orderD.getDish().getId() == dishId).findFirst();
+        Optional<OrderDish> orderDish = orderDishList.stream().filter(orderD-> orderD.getDishId() == dishId).findFirst();
 
         if(orderDish.isPresent()){
             orderDish.get().incrementQuantities();
         } else {
             orderDishList.add(OrderDish.builder()
-                    .dish(new DishService().findDishById(dishId))
+                    .dishId(dishId)
                     .quantities(1)
                     .build());
         }

@@ -29,9 +29,8 @@ public class OrderDishDAOImp implements OrderDishDAO {
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_ORDER_DISH, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setInt(1, entity.getQuantities());
-            preparedStatement.setLong(2, entity.getDish().getId());
-            System.out.println(entity.getOrder());
-            preparedStatement.setLong(3, entity.getOrder().getId());
+            preparedStatement.setLong(2, entity.getDishId());
+            preparedStatement.setLong(3, entity.getOrderId());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if(rs.next()){
@@ -61,8 +60,8 @@ public class OrderDishDAOImp implements OrderDishDAO {
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ORDER_DISH);){
             preparedStatement.setInt(1, entity.getQuantities());
-            preparedStatement.setLong(2, entity.getDish().getId());
-            preparedStatement.setLong(3, entity.getOrder().getId());
+            preparedStatement.setLong(2, entity.getDishId());
+            preparedStatement.setLong(3, entity.getOrderId());
             preparedStatement.setLong(4, entity.getId());
             preparedStatement.executeUpdate();
 

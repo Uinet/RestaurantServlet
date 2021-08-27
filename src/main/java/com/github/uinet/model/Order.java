@@ -1,9 +1,7 @@
 package com.github.uinet.model;
 
 import com.github.uinet.services.OrderDishService;
-import com.github.uinet.services.UserService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class Order {
@@ -25,16 +23,6 @@ public class Order {
 
     public void setCustomerId(long customerId) {
         this.customerId = customerId;
-    }
-
-    public User getCustomer() {
-        System.out.println("GetCustomer:" + customerId);
-        return new UserService().loadUserById(customerId);
-    }
-
-    public void setCustomer(User customer) {
-        System.out.println("SetCustomer:" + customer.getId());
-        this.customerId = customer.getId();
     }
 
     public OrderStatus getStatus() {
@@ -59,7 +47,7 @@ public class Order {
 
     public Order(){}
 
-    public Order(long id, LocalDateTime creationDate, User customer) {
+    public Order(long id, User customer) {
         this.id = id;
         this.customerId = customer.getId();
     }
@@ -69,12 +57,6 @@ public class Order {
 
         public Builder id(Long id){
             order.setId(id);
-            return this;
-        }
-
-        public Builder customer(User user){
-            System.out.println("Builder:" + user.getId());
-            order.setCustomer(user);
             return this;
         }
 

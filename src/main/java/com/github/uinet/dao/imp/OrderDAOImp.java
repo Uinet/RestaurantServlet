@@ -82,7 +82,7 @@ public class OrderDAOImp implements OrderDAO {
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ORDER)){
             preparedStatement.setString(1,entity.getStatus().toString());
-            preparedStatement.setLong(2, entity.getCustomer().getId());
+            preparedStatement.setLong(2, entity.getCustomerId());
             preparedStatement.setLong(3, entity.getId());
             preparedStatement.executeUpdate();
 
