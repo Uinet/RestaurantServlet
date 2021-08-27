@@ -47,7 +47,7 @@
                             </c:forEach>
                         </ul>
                     </th>
-                    <th></th>
+                    <th>${order.getSum()}</th>
                 </tr>
             </c:forEach>
             </tbody>

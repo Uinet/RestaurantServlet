@@ -31,6 +31,12 @@ public class OrderService {
         }
     }
 
+/*
+    public double getOrderAmount(Order order){
+        return new OrderDishService().getOrderDishesByOrderId(order.getId()).stream().
+    }
+*/
+
     public Order save(Order orders){
        return orderDAOImp.create(orders);
     }

@@ -1,5 +1,7 @@
 package com.github.uinet.model;
 
+import com.github.uinet.services.OrderDishService;
+
 public class Order {
     private long id;
     private long customerId;
@@ -27,6 +29,12 @@ public class Order {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public double getSum(){
+        return new OrderDishService().getOrderDishesByOrderId(id).stream()
+                .mapToDouble(OrderDish::getTotalPrice)
+                .sum();
     }
 
     public static Builder builder(){

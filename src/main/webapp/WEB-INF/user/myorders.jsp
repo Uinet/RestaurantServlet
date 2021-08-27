@@ -38,7 +38,7 @@
                         <th></th>
                         <th>
                             <ul>
-                                <c:forEach var="orderDish" items="${order.getOrderDishes()}">
+                                <c:forEach var="orderDish" items="${orderDishService.getOrderDishesByOrderId(order.getId())}">
                                     <li>${orderDish.getDish().getName()} - ${orderDish.getQuantities()}</li>
                                 </c:forEach>
                             </ul>

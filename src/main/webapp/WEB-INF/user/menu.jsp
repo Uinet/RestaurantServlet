@@ -26,7 +26,9 @@
                     Category
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuCategoryButton">
-
+                    <c:forEach var="category" items="${categories}">
+                    <li><a class="dropdown-item" href="/api/app/user/menu?category=${category}">${category}</a></li>
+                    </c:forEach>
                 </ul>
             </div>
             <div class="dropdown filter" id="sort">
@@ -81,6 +83,7 @@
                         </table>
                     </div>
                     <div class="card-body">
+                        <p><fmt:message key="cart.total"/> ${sessionScope.orderSum}$</p>
                         <form method="post" action="${pageContext.request.contextPath}/app/user/newOrder">
                             <button class="btn btn-primary"><fmt:message key="cart.button" /></button>
                         </form>
