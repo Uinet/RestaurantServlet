@@ -4,9 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericDAO<T> extends AutoCloseable {
+public interface GenericDAO<T>{
     T create(T entity) throws SQLException;
-    T findById(Long id);
+    T findById(long id);
     List<T> findAll();
     void update(T entity);
     void delete(T entity);

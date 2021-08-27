@@ -30,7 +30,23 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                <c:forEach var="order" items="${orders}">
+                    <tr>
+                        <th scope="row">${order.getId()}</th>
+                        <th>${order.getStatus()}</th>
+                        <th></th>
+                        <th>
+                            <ul>
+                                <c:forEach var="orderDish" items="${order.getOrderDishes()}">
+                                    <li>${orderDish.getDish().getName()} - ${orderDish.getQuantities()}</li>
+                                </c:forEach>
+                            </ul>
+                        </th>
+                        <th>${order.getSum()}</th>
+                    </tr>
+                </c:forEach>
+            </tbody>
         </table>
     </div>
     <jsp:include page="../../fragment/footer.jsp"></jsp:include>

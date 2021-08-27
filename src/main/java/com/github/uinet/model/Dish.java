@@ -1,13 +1,13 @@
 package com.github.uinet.model;
 
 public class Dish {
-    private Long id;
+    private long id;
     private String name;
     private double price;
     private DishCategory category;
     private String description;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -64,7 +64,7 @@ public class Dish {
     public static class Builder{
         private final Dish dish = new Dish();
 
-        public Builder id(Long id){
+        public Builder id(long id){
             dish.setId(id);
             return this;
         }

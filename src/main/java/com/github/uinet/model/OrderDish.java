@@ -1,33 +1,53 @@
 package com.github.uinet.model;
 
+import com.github.uinet.services.DishService;
+import com.github.uinet.services.OrderService;
+
 public class OrderDish {
-    private Long id;
-    private Order order;
-    private Dish dish;
+    private long id;
+    private long orderId;
+    private long dishId;
     private int quantities;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
+
+    public long getDishId() {
+        return dishId;
+    }
+
+    public void setDishId(long dishId) {
+        this.dishId = dishId;
+    }
+
     public Order getOrder() {
-        return order;
+        return new OrderService().findById(orderId);
     }
 
     public void setOrder(Order order) {
-        this.order = order;
+        System.out.println(order.getId());
+        this.orderId = order.getId();
     }
 
     public Dish getDish() {
-        return dish;
+        return new DishService().findDishById(dishId);
     }
 
     public void setDish(Dish dish) {
-        this.dish = dish;
+        this.dishId = dish.getId();
     }
 
     public int getQuantities() {
@@ -60,7 +80,7 @@ public class OrderDish {
             orderDish = new OrderDish();
         }
 
-        public Builder id(Long id){
+        public Builder id(long id){
             orderDish.setId(id);
             return this;
         }
@@ -72,6 +92,16 @@ public class OrderDish {
 
         public Builder dish(Dish dish){
             orderDish.setDish(dish);
+            return this;
+        }
+
+        public Builder dishId(long dishId){
+            orderDish.setDishId(dishId);
+            return this;
+        }
+
+        public Builder orderId(long orderId){
+            orderDish.setOrderId(orderId);
             return this;
         }
 

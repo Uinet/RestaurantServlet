@@ -6,12 +6,11 @@ import com.github.uinet.model.Dish;
 import com.github.uinet.model.DishCategory;
 
 import java.util.List;
-import java.util.Optional;
 
 public class DishService {
     private final DishDAOImp dishDAOImp = DAOFactory.getInstance().createDishDao();
 
-    public Dish findDishById(Long id){
+    public Dish findDishById(long id){
         return dishDAOImp.findById(id);
     }
 

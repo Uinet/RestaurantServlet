@@ -54,7 +54,8 @@
                                 <p class="card-text">${dish.getCategory()}</p>
                                 <p class="card-text">${dish.getDescription()}</p>
                                 <p class="card-text">${dish.getPrice()}</p>
-                                <form method="post">
+                                <form method="post" action="${pageContext.request.contextPath}/app/user/addToCart">
+                                    <input type="hidden" id="dishId" name="dishId" value="${dish.getId()}">
                                     <button class="btn btn-primary"><fmt:message key="menu.buy" /></button>
                                 </form>
                             </div>
@@ -70,10 +71,19 @@
                     <div class="card-body">
                         <table class="table">
                             <tbody>
+                                <c:forEach var="orderDish" items="${sessionScope.orderDishes}">
+                                    <tr>
+                                        <th scope="row">${orderDish.dish.name}</th>
+                                        <td>${orderDish.quantities} - <fmt:message key="cart.quantities" /></td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
                     <div class="card-body">
+                        <form method="post" action="${pageContext.request.contextPath}/app/user/newOrder">
+                            <button class="btn btn-primary"><fmt:message key="cart.button" /></button>
+                        </form>
                     </div>
                 </div>
             </div>

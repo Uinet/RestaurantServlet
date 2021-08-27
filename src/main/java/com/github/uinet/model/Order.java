@@ -1,38 +1,40 @@
 package com.github.uinet.model;
 
-import jdk.nashorn.internal.ir.SplitReturn;
+import com.github.uinet.services.OrderDishService;
+import com.github.uinet.services.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Order {
-    private Long id;
-    private User customer;
-    private List<OrderDish> orderDishes;
+    private long id;
+    private long customerId;
     private OrderStatus status;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
+    public long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
+    }
+
     public User getCustomer() {
-        return customer;
+        System.out.println("GetCustomer:" + customerId);
+        return new UserService().loadUserById(customerId);
     }
 
     public void setCustomer(User customer) {
-        this.customer = customer;
-    }
-
-    public List<OrderDish> getOrderDishes() {
-        return orderDishes;
-    }
-
-    public void setOrderDishes(List<OrderDish> orderDishes) {
-        this.orderDishes = orderDishes;
+        System.out.println("SetCustomer:" + customer.getId());
+        this.customerId = customer.getId();
     }
 
     public OrderStatus getStatus() {
@@ -43,16 +45,23 @@ public class Order {
         this.status = status;
     }
 
+    public List<OrderDish> getOrderDishes(){
+        return new OrderDishService().getOrderDishesByOrderId(id);
+    }
+
+    public double getSum(){
+        return getOrderDishes().stream().mapToDouble(OrderDish::getTotalPrice).sum();
+    }
+
     public static Builder builder(){
         return new Builder();
     }
 
     public Order(){}
 
-    public Order(Long id, LocalDateTime creationDate, User customer, List<OrderDish> orderDishes) {
+    public Order(long id, LocalDateTime creationDate, User customer) {
         this.id = id;
-        this.customer = customer;
-        this.orderDishes = orderDishes;
+        this.customerId = customer.getId();
     }
 
     public static class Builder{
@@ -64,12 +73,18 @@ public class Order {
         }
 
         public Builder customer(User user){
+            System.out.println("Builder:" + user.getId());
             order.setCustomer(user);
             return this;
         }
 
-        public Builder orderDishes(List<OrderDish> orderDishes){
-            order.setOrderDishes(orderDishes);
+        public Builder customerId(long userId){
+            order.setCustomerId(userId);
+            return this;
+        }
+
+        public Builder status(OrderStatus orderStatus){
+            order.setStatus(orderStatus);
             return this;
         }
 

@@ -1,29 +1,36 @@
 package com.github.uinet.dao.imp;
 
+import com.github.uinet.dao.DAOFactory;
 import com.github.uinet.dao.OrderDishDAO;
 import com.github.uinet.model.OrderDish;
+import com.github.uinet.utils.ConnectionCreator;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class OrderDishDAOImp implements OrderDishDAO {
 
     private static final String SQL_CREATE_ORDER_DISH = "INSERT INTO order_dishes (quantities, dish_id, order_id) VALUES (?, ?, ?)";
     private static final String SQL_UPDATE_ORDER_DISH = "UPDATE order_dishes SET quantities=?, dish_id=?, order_id=? WHERE id=?";
+    private static final String SQL_SELECT_ALL_ORDER_DISH_BY_ORDER = "SELECT * FROM order_dishes where order_id=?";
 
-    private Connection connection;
-
-    public OrderDishDAOImp(Connection connection){
-        this.connection = connection;
+    private OrderDish extractFromResultSet(ResultSet resultSet) throws SQLException {
+        return OrderDish.builder()
+                .id(resultSet.getLong("id"))
+                .dishId(resultSet.getLong("dish_id"))
+                .orderId(resultSet.getLong("order_id"))
+                .quantities(resultSet.getInt("quantities"))
+                .build();
     }
 
     @Override
     public OrderDish create(OrderDish entity) throws SQLIntegrityConstraintViolationException  {
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_ORDER_DISH, Statement.RETURN_GENERATED_KEYS)){
+        try(Connection connection = ConnectionCreator.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_ORDER_DISH, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setInt(1, entity.getQuantities());
             preparedStatement.setLong(2, entity.getDish().getId());
+            System.out.println(entity.getOrder());
             preparedStatement.setLong(3, entity.getOrder().getId());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -40,7 +47,7 @@ public class OrderDishDAOImp implements OrderDishDAO {
     }
 
     @Override
-    public OrderDish findById(Long id) {
+    public OrderDish findById(long id) {
         return new OrderDish();
     }
 
@@ -51,7 +58,8 @@ public class OrderDishDAOImp implements OrderDishDAO {
 
     @Override
     public void update(OrderDish entity) {
-        try(PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ORDER_DISH);){
+        try(Connection connection = ConnectionCreator.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ORDER_DISH);){
             preparedStatement.setInt(1, entity.getQuantities());
             preparedStatement.setLong(2, entity.getDish().getId());
             preparedStatement.setLong(3, entity.getOrder().getId());
@@ -68,15 +76,22 @@ public class OrderDishDAOImp implements OrderDishDAO {
 
     }
 
-    @Override
-    public void close() throws Exception {
-
-    }
-
     public void saveAll(List<OrderDish> collect) {
     }
 
-    public List<OrderDish> findByOrderId(Long orderId) {
-        return new ArrayList<>();
+    public List<OrderDish> findByOrderId(long orderId) {
+        List<OrderDish> result = new ArrayList<>();
+        try(Connection connection = ConnectionCreator.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_ORDER_DISH_BY_ORDER);){
+            preparedStatement.setLong(1, orderId);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                result.add(extractFromResultSet(rs));
+            }
+
+        }catch (SQLException ex){
+            throw new RuntimeException();
+        }
+        return result;
     }
 }

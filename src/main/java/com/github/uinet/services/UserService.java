@@ -10,10 +10,8 @@ import java.util.Optional;
 public class UserService {
     private final UserDAOImp userDAOImp = DAOFactory.getInstance().createUserDao();
 
-    public User loadUserByUsername(String username) throws Exception {
-        return userDAOImp.getUserByUsername(username).orElseThrow(()->{
-            return new Exception("Email: " + username + "not found");
-        });
+    public User loadUserByUsername(String username){
+        return userDAOImp.getUserByUsername(username);
     }
 
     public Optional<User> registerNewUser(User user) throws UserException {
@@ -24,7 +22,7 @@ public class UserService {
         }
     }
 
-    public User loadUserById(Long userId) {
+    public User loadUserById(long userId) {
         return userDAOImp.findById(userId);
     }
 }

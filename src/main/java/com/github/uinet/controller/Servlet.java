@@ -25,6 +25,8 @@ public class Servlet extends HttpServlet {
         commands.put("admin/users", new UsersCommand());
         commands.put("user/myorders", new MyOrdersCommand());
         commands.put("user/menu", new MenuCommand());
+        commands.put("user/addToCart", new AddToCartCommand());
+        commands.put("user/newOrder", new CreateOrderCommand());
     }
 
     @Override

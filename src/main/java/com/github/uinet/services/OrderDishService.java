@@ -24,7 +24,17 @@ public class OrderDishService {
         orderDishDAOImp.update(orderDish);
     }
 
-    public List<OrderDish> getOrderDishesByOrderId(Long orderId){
+    public List<OrderDish> getOrderDishesByOrderId(long orderId){
         return orderDishDAOImp.findByOrderId(orderId);
+    }
+
+    public void addDishesToOrder(List<OrderDish> orderDishes, Order order) throws SQLIntegrityConstraintViolationException {
+        System.out.println(order);
+        for (OrderDish orderDish: orderDishes) {
+            System.out.println(order);
+            orderDish.setOrder(order);
+            System.out.println(orderDish.getOrder());
+            orderDishDAOImp.create(orderDish);
+        }
     }
 }

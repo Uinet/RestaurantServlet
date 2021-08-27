@@ -1,14 +1,14 @@
 package com.github.uinet.model;
 
 public class User {
-    private Long id;
+    private long id;
     private String name;
     private String username;
     private String password;
     private UserRole role;
     private double money;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -32,7 +32,7 @@ public class User {
         return money;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -62,7 +62,7 @@ public class User {
 
     public User(){}
 
-    public User(Long id, String name, String username, String password, UserRole role, double money) {
+    public User(long id, String name, String username, String password, UserRole role, double money) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -74,7 +74,7 @@ public class User {
     public static class Builder{
         private final User user = new User();
 
-        public Builder id(Long id){
+        public Builder id(long id){
             user.setId(id);
             return this;
         }

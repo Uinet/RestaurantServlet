@@ -1,12 +1,10 @@
 package com.github.uinet.controller.command;
 
-import com.github.uinet.dao.DAOFactory;
-import com.github.uinet.dao.imp.UserDAOImp;
 import com.github.uinet.model.User;
 import com.github.uinet.model.UserRole;
+import com.github.uinet.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 public class LoginCommand implements Command{
     @Override
@@ -18,17 +16,13 @@ public class LoginCommand implements Command{
             return "/login.jsp";
         }
 
-        final UserDAOImp userDao = DAOFactory.getInstance().createUserDao();
-        Optional<User> userOptional = userDao.getUserByUsername(username);
+        User user = new UserService().loadUserByUsername(username);
 
         UserRole role = UserRole.GUEST;
 
         //TODO password_encryption
-
-        if(userOptional.isPresent()){
-            if(userOptional.get().getPassword().equals(password)){
-                role = userOptional.get().getRole();
-            }
+        if(user != null && user.getPassword().equals(password)){
+            role = user.getRole();
         }
 
         System.out.println(username);
