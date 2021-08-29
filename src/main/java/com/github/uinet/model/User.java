@@ -1,12 +1,14 @@
 package com.github.uinet.model;
 
+import java.math.BigDecimal;
+
 public class User {
     private long id;
     private String name;
     private String username;
     private String password;
     private UserRole role;
-    private double money;
+    private BigDecimal money;
 
     public long getId() {
         return id;
@@ -26,10 +28,6 @@ public class User {
 
     public UserRole getRole() {
         return role;
-    }
-
-    public double getMoney() {
-        return money;
     }
 
     public void setId(long id) {
@@ -52,7 +50,11 @@ public class User {
         this.role = role;
     }
 
-    public void setMoney(double money) {
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
         this.money = money;
     }
 
@@ -62,7 +64,7 @@ public class User {
 
     public User(){}
 
-    public User(long id, String name, String username, String password, UserRole role, double money) {
+    public User(long id, String name, String username, String password, UserRole role, BigDecimal money) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -94,7 +96,7 @@ public class User {
             return this;
         }
 
-        public Builder money(double money){
+        public Builder money(BigDecimal money){
             user.setMoney(money);
             return this;
         }

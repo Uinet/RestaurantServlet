@@ -20,7 +20,7 @@ public class UserDAOImp implements UserDAO {
                 .id(resultSet.getLong("id"))
                 .name(resultSet.getString("name"))
                 .password(resultSet.getString("password"))
-                .money(resultSet.getDouble("money"))
+                .money(resultSet.getBigDecimal("money"))
                 .username(resultSet.getString("username"))
                 .role(UserRole.valueOf(resultSet.getString("role")))
                 .build();
@@ -48,7 +48,7 @@ public class UserDAOImp implements UserDAO {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getPassword());
             preparedStatement.setString(3, entity.getUsername());
-            preparedStatement.setDouble(4, entity.getMoney());
+            preparedStatement.setBigDecimal(4, entity.getMoney());
             preparedStatement.setString(5, entity.getRole().toString());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();

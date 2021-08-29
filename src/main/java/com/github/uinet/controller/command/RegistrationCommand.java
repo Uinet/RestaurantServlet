@@ -6,6 +6,7 @@ import com.github.uinet.model.UserRole;
 import com.github.uinet.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 public class RegistrationCommand implements Command{
     @Override
@@ -21,7 +22,7 @@ public class RegistrationCommand implements Command{
                     .username(username)
                     .name(name)
                     .password(password)
-                    .money(0.0)
+                    .money(new BigDecimal("0.0"))
                     .build());
         } catch (UserException e) {
             request.setAttribute("UserIsExist", true);
