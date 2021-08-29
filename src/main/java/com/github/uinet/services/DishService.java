@@ -14,11 +14,15 @@ public class DishService {
         return dishDAOImp.findById(id);
     }
 
-    public List<Dish> findAllByCategory(DishCategory dishCategory){
-        return dishDAOImp.findAllByCategory(dishCategory);
+    public List<Dish> findAllByCategory(DishCategory dishCategory, int page, int recordsPerPage){
+        return dishDAOImp.findAllByCategory(dishCategory, page, recordsPerPage);
     }
 
-    public List<Dish> findAllDish(){
-        return dishDAOImp.findAll();
+    public List<Dish> findAllDish(int page, int recordsPerPage ){
+        return dishDAOImp.findAll(page, recordsPerPage);
+    }
+
+    public int getNumbersOfRows(){
+        return dishDAOImp.getNumberOfRows();
     }
 }

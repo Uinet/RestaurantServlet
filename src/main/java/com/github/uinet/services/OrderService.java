@@ -15,8 +15,12 @@ public class OrderService {
         return orderDAOImp.findAll();
     }
 
-    public List<Order> findAllByUser(User user){
-        return orderDAOImp.findAllByUserId(user.getId());
+    public List<Order> findAll(int page, int recordsPerPage){
+        return orderDAOImp.findAll(page, recordsPerPage);
+    }
+
+    public List<Order> findAllByUser(User user, int page, int recordsPerPage){
+        return orderDAOImp.findAllByUserId(user.getId(), page, recordsPerPage);
     }
 
     public Order findById(long id){
@@ -31,13 +35,15 @@ public class OrderService {
         }
     }
 
-/*
-    public double getOrderAmount(Order order){
-        return new OrderDishService().getOrderDishesByOrderId(order.getId()).stream().
-    }
-*/
-
     public Order save(Order orders){
        return orderDAOImp.create(orders);
+    }
+
+    public int getNumbersOfRows(){
+        return orderDAOImp.getNumberOfRows();
+    }
+
+    public int getNumbersOfRowsByUser(User user){
+        return orderDAOImp.getNumberOfRowsByUser(user);
     }
 }

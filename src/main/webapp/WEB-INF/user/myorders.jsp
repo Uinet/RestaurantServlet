@@ -48,6 +48,19 @@
                 </c:forEach>
             </tbody>
         </table>
+        <nav>
+            <ul class="pagination">
+                <c:if test="${currentPage > 1}">
+                    <li class="page-item"><a class="page-link" href="/api/app/user/myorders?page=${currentPage - 1}">Previous</a></li>
+                </c:if>
+                <c:forEach var="pageNumber" items="${pageNumbers}">
+                    <li class="page-item ${(currentPage eq pageNumber) ? 'active': ''}"><a href="/api/app/user/myorders?page=${pageNumber}" class="page-link">${pageNumber}</a></li>
+                </c:forEach>
+                <c:if test="${currentPage < pageNumbers.size()}">
+                    <li class="page-item"><a href="/api/app/user/myorders?page=${currentPage + 1}" class="page-link">Next</a></li>
+                </c:if>
+            </ul>
+        </nav>
     </div>
     <jsp:include page="../../fragment/footer.jsp"></jsp:include>
 </body>

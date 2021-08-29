@@ -84,6 +84,11 @@ public class UserDAOImp implements UserDAO {
     }
 
     @Override
+    public List<User> findAll(int page, int recordsPerPage) {
+        return null;
+    }
+
+    @Override
     public void update(User entity) {
 
     }

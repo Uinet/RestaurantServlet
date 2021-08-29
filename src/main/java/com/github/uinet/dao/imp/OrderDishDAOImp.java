@@ -1,6 +1,5 @@
 package com.github.uinet.dao.imp;
 
-import com.github.uinet.dao.DAOFactory;
 import com.github.uinet.dao.OrderDishDAO;
 import com.github.uinet.model.OrderDish;
 import com.github.uinet.utils.ConnectionCreator;
@@ -52,6 +51,11 @@ public class OrderDishDAOImp implements OrderDishDAO {
 
     @Override
     public List<OrderDish> findAll() {
+        return null;
+    }
+
+    @Override
+    public List<OrderDish> findAll(int page, int recordsPerPage) {
         return null;
     }
 

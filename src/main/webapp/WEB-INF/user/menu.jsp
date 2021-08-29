@@ -5,6 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${lang}" />
@@ -105,6 +106,19 @@
                 </div>
             </div>
         </div>
+        <nav>
+            <ul class="pagination">
+                <c:if test="${currentPage > 1}">
+                    <li class="page-item"><a class="page-link" href="/api/app/user/menu?page=${currentPage - 1}">Previous</a></li>
+                </c:if>
+                <c:forEach var="pageNumber" items="${pageNumbers}">
+                    <li class="page-item ${(currentPage eq pageNumber) ? 'active': ''}"><a href="/api/app/user/menu?page=${pageNumber}" class="page-link">${pageNumber}</a></li>
+                </c:forEach>
+                <c:if test="${currentPage < pageNumbers.size()}">
+                    <li class="page-item"><a href="/api/app/user/menu?page=${currentPage + 1}" class="page-link">Next</a></li>
+                </c:if>
+            </ul>
+        </nav>
     </div>
     <jsp:include page="../../fragment/footer.jsp"></jsp:include>
 </body>
