@@ -1,12 +1,9 @@
 package com.github.uinet.controller.command;
 
 import com.github.uinet.model.OrderDish;
-import com.github.uinet.services.DishService;
-import com.github.uinet.services.OrderDishService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,9 +11,10 @@ import java.util.Optional;
 public class AddToCartCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
-        Long dishId = Long.parseLong(request.getParameter("dishId"));
+        long dishId = Long.parseLong(request.getParameter("dishId"));
 
         HttpSession session = request.getSession();
+
         List<OrderDish> orderDishList = (List<OrderDish>) session.getAttribute("orderDishes");
         if(orderDishList == null){
             orderDishList = new ArrayList<>();

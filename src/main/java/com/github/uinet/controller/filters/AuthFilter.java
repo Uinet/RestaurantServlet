@@ -31,8 +31,6 @@ public class AuthFilter implements Filter {
             session.setAttribute("role", role);
         }
 
-        System.out.println("AuthFilter user role:" +role);
-        System.out.println("AuthFilter request URI:" + req.getRequestURI());
         if(role.equals(UserRole.GUEST) && (req.getRequestURI().contains("admin") || req.getRequestURI().contains("user"))) {
             res.sendRedirect("/api/");
         }else if(role.equals(UserRole.CLIENT) && req.getRequestURI().contains("admin")) {

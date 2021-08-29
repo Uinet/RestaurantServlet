@@ -50,14 +50,13 @@
                 <div class="row">
                     <c:forEach var="dish" items="${dishes}">
                         <div class="card col-3" style="width: 18rem;">
-                            <img class="card-img-top" alt="...">
+                            <img src="${pageContext.request.contextPath}/img/dish/${dish.getImg()}" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">${dish.getName()}</h5>
                                 <p class="card-text">${dish.getCategory()}</p>
                                 <p class="card-text">${dish.getDescription()}</p>
                                 <p class="card-text">${dish.getPrice()}</p>
-                                <form method="post" action="${pageContext.request.contextPath}/app/user/addToCart">
-                                    <input type="hidden" id="dishId" name="dishId" value="${dish.getId()}">
+                                <form method="post" action="${pageContext.request.contextPath}/app/user/addToCart?dishId=${dish.getId()}">
                                     <button class="btn btn-primary"><fmt:message key="menu.buy" /></button>
                                 </form>
                             </div>
@@ -77,6 +76,21 @@
                                     <tr>
                                         <th scope="row">${orderDish.dish.name}</th>
                                         <td>${orderDish.quantities} - <fmt:message key="cart.quantities" /></td>
+                                        <td>
+                                            <form method="post" action="${pageContext.request.contextPath}/app/user/addToCart?dishId=${orderDish.dish.id}">
+                                                <button class="btn btn-primary">Inc</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="${pageContext.request.contextPath}/app/user/reduceQuantities?dishId=${orderDish.dish.id}">
+                                                <button class="btn btn-primary">Dec</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="${pageContext.request.contextPath}/app/user/removeFromCart?dishId=${orderDish.dish.id}">
+                                                <button class="btn-close"></button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>

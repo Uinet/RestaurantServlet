@@ -11,7 +11,7 @@ public class LoginCommand implements Command{
     public String execute(HttpServletRequest request) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(username + " " + password);
+
         if( username == null || username.equals("") || password == null || password.equals("")  ){
             return "/login.jsp";
         }
@@ -24,10 +24,6 @@ public class LoginCommand implements Command{
         if(user != null && user.getPassword().equals(password)){
             role = user.getRole();
         }
-
-        System.out.println(username);
-        System.out.println(password);
-        System.out.println(role);
 
         CommandUtility.setUserRole(request, role, username);
 

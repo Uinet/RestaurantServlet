@@ -6,12 +6,13 @@ public class Dish {
     private double price;
     private DishCategory category;
     private String description;
+    private String img;
 
     public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -45,6 +46,14 @@ public class Dish {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public static Builder builder(){
@@ -88,6 +97,11 @@ public class Dish {
             dish.setDescription(description);
             return this;
 
+        }
+
+        public Builder image(String imageUrl){
+            dish.setImg(imageUrl);
+            return this;
         }
 
         public Dish build(){

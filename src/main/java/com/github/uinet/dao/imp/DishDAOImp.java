@@ -28,6 +28,7 @@ public class DishDAOImp implements DishDAO {
                 .name(resultSet.getString("name"))
                 .description(resultSet.getString("description"))
                 .price(resultSet.getDouble("price"))
+                .image(resultSet.getString("img"))
                 .build();
     }
 
