@@ -28,7 +28,7 @@ public class DishDAOImp implements DishDAO {
                 .category(DishCategory.valueOf(resultSet.getString("category")))
                 .name(resultSet.getString("name"))
                 .description(resultSet.getString("description"))
-                .price(resultSet.getDouble("price"))
+                .price(resultSet.getBigDecimal("price"))
                 .image(resultSet.getString("img"))
                 .build();
     }

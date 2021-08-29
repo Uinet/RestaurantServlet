@@ -1,9 +1,11 @@
 package com.github.uinet.model;
 
+import java.math.BigDecimal;
+
 public class Dish {
     private long id;
     private String name;
-    private double price;
+    private BigDecimal price;
     private DishCategory category;
     private String description;
     private String img;
@@ -24,11 +26,11 @@ public class Dish {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -62,7 +64,7 @@ public class Dish {
 
     public Dish(){}
 
-    public Dish(Long id, String name, double price, DishCategory category, String description) {
+    public Dish(Long id, String name, BigDecimal price, DishCategory category, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -83,7 +85,7 @@ public class Dish {
             return this;
         }
 
-        public Builder price(double price){
+        public Builder price(BigDecimal price){
             dish.setPrice(price);
             return this;
         }

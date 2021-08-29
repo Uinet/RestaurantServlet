@@ -6,6 +6,7 @@ import com.github.uinet.services.DishService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -32,7 +33,7 @@ public class MenuCommand implements Command{
 
         List<OrderDish> orderDishes = (List<OrderDish>) session.getAttribute("orderDishes");
         if(orderDishes != null){
-            session.setAttribute("orderSum", orderDishes.stream().mapToDouble(OrderDish::getTotalPrice).sum());
+            session.setAttribute("orderSum", orderDishes.stream().map(OrderDish::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
         }
 
         int nOfPages = dishService.getNumbersOfRows() / recordsPerPage;

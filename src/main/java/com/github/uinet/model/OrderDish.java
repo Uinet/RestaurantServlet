@@ -2,6 +2,8 @@ package com.github.uinet.model;
 
 import com.github.uinet.services.DishService;
 
+import java.math.BigDecimal;
+
 public class OrderDish {
     private long id;
     private long orderId;
@@ -45,8 +47,8 @@ public class OrderDish {
         this.quantities = quantities;
     }
 
-    public Double getTotalPrice(){
-        return getDish().getPrice()*quantities;
+    public BigDecimal getTotalPrice(){
+        return getDish().getPrice().multiply(BigDecimal.valueOf(quantities));
     }
 
     public void incrementQuantities(){
