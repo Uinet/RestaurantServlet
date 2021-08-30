@@ -30,6 +30,7 @@ public class Servlet extends HttpServlet {
         commands.put("admin/orders/changeStatus", new ChangeStatusCommand());
         commands.put("user/removeFromCart", new RemoveFromCartCommand());
         commands.put("user/reduceQuantities", new ReduceFromCartCommand());
+        commands.put("user/myorders/pay", new PayCommand());
     }
 
     @Override

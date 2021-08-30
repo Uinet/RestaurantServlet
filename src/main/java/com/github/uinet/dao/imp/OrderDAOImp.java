@@ -20,6 +20,9 @@ public class OrderDAOImp implements OrderDAO {
     private static final String SQL_SELECT_PAGINATION_ORDERS = "SELECT * FROM orders ORDER BY id DESC LIMIT ?, ?";
     private static final String SQL_GET_COUNT_OF_ORDERS = "SELECT COUNT(id) AS row_count FROM orders";
     private static final String SQL_GET_COUNT_OF_ORDERS_BY_USER = "SELECT COUNT(id) AS row_count FROM orders WHERE user_id=?";
+    private static final String SQL_CHANGE_ORDER_STATUS_TO_PAID = "UPDATE orders SET status='PAID' WHERE id=?";
+    private static final String SQL_INCREASE_ADMIN_MONEY = "UPDATE users SET money=money+? WHERE role='MANAGER' LIMIT 1";
+    private static final String SQL_REDUCE_CUSTOMER_MONEY = "UPDATE users SET money=money-? WHERE id=?";
 
     private Order extractFromResultSet(ResultSet resultSet) throws SQLException {
         return Order.builder()
@@ -164,5 +167,48 @@ public class OrderDAOImp implements OrderDAO {
             throw new RuntimeException();
         }
         return result;
+    }
+
+    public void payOrder(Order order){
+        Connection connection = null;
+        PreparedStatement decreaseMoneyStatement = null;
+        PreparedStatement increaseMoneyStatement = null;
+        PreparedStatement changeStatusStatement = null;
+        try {
+            connection = ConnectionCreator.createConnection();
+            connection.setAutoCommit(false);
+
+            changeStatusStatement = connection.prepareStatement(SQL_CHANGE_ORDER_STATUS_TO_PAID);
+            changeStatusStatement.setLong(1, order.getId());
+            changeStatusStatement.executeUpdate();
+
+            decreaseMoneyStatement = connection.prepareStatement(SQL_REDUCE_CUSTOMER_MONEY);
+            decreaseMoneyStatement.setBigDecimal(1, order.getSum());
+            decreaseMoneyStatement.setLong(2, order.getCustomerId());
+            decreaseMoneyStatement.executeUpdate();
+
+            increaseMoneyStatement = connection.prepareStatement(SQL_INCREASE_ADMIN_MONEY);
+            increaseMoneyStatement.setBigDecimal(1, order.getSum());
+            increaseMoneyStatement.executeUpdate();
+
+            connection.commit();
+
+        } catch (Exception ex){
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }finally {
+            try {
+                decreaseMoneyStatement.close();
+                increaseMoneyStatement.close();
+                changeStatusStatement.close();
+                connection.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

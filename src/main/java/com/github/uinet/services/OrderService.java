@@ -46,4 +46,8 @@ public class OrderService {
     public int getNumbersOfRowsByUser(User user){
         return orderDAOImp.getNumberOfRowsByUser(user);
     }
+
+    public void payOrder(Order order){
+        orderDAOImp.payOrder(order);
+    }
 }

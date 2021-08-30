@@ -44,6 +44,11 @@
                             </ul>
                         </th>
                         <th>${order.getSum()}</th>
+                        <td>
+                            <form method="post" action="/api/app/user/myorders/pay?orderId=${order.getId()}">
+                                <button type="submit" ${(order.getStatus() ne 'DELIVERED') ? 'disabled' : ''} class="btn btn-primary"><fmt:message key="my.orders.pay" /></button>
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>
