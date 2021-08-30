@@ -1,6 +1,5 @@
 package com.github.uinet.controller.command;
 
-import com.github.uinet.dao.DishDAO;
 import com.github.uinet.model.User;
 import com.github.uinet.model.UserRole;
 import com.github.uinet.services.UserService;

@@ -2,11 +2,9 @@ package com.github.uinet.services;
 
 import com.github.uinet.dao.DAOFactory;
 import com.github.uinet.dao.imp.DishDAOImp;
-import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.Dish;
 import com.github.uinet.model.DishCategory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

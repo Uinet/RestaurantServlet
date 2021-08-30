@@ -1,6 +1,5 @@
 package com.github.uinet.controller.command;
 
-import com.github.uinet.dao.DishDAO;
 import com.github.uinet.model.OrderStatus;
 import com.github.uinet.services.OrderService;
 import org.apache.log4j.LogManager;

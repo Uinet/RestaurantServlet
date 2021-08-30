@@ -1,7 +1,6 @@
 package com.github.uinet.dao.imp;
 
 import com.github.uinet.dao.OrderDAO;
-import com.github.uinet.dao.UserDAO;
 import com.github.uinet.model.Order;
 import com.github.uinet.model.OrderStatus;
 import com.github.uinet.model.User;
@@ -15,7 +14,6 @@ import java.util.List;
 
 public class OrderDAOImp implements OrderDAO {
 
-    private static final String SQL_SELECT_ALL_ORDERS = "SELECT * FROM orders";
     private static final String SQL_SELECT_ALL_ORDERS_BY_USER = "SELECT * FROM orders WHERE user_id=? ORDER BY id DESC LIMIT ?, ?";
     private static final String SQL_SELECT_ORDER_BY_ID ="SELECT * FROM orders WHERE id=?";
     private static final String SQL_CREATE_ORDER = "INSERT INTO orders (status, user_id) VALUES (?, ?)";

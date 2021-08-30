@@ -34,7 +34,6 @@ public class OrderDish {
         this.dishId = dishId;
     }
 
-    //TODO remove this method
     public Dish getDish() {
         return new DishService().findDishById(dishId);
     }

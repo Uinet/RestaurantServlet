@@ -45,11 +45,6 @@ public class Order {
 
     public Order(){}
 
-    public Order(long id, User customer) {
-        this.id = id;
-        this.customerId = customer.getId();
-    }
-
     public static class Builder{
         private final Order order = new Order();
 

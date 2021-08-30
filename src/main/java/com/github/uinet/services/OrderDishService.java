@@ -5,7 +5,6 @@ import com.github.uinet.dao.imp.OrderDishDAOImp;
 import com.github.uinet.model.Order;
 import com.github.uinet.model.OrderDish;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class OrderDishService {

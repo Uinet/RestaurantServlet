@@ -1,7 +1,6 @@
 package com.github.uinet.controller.command;
 
 import com.github.uinet.dao.DAOFactory;
-import com.github.uinet.dao.imp.UserDAOImp;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 

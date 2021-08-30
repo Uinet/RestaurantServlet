@@ -1,7 +1,6 @@
 package com.github.uinet.dao.imp;
 
 import com.github.uinet.dao.DishDAO;
-import com.github.uinet.dao.UserDAO;
 import com.github.uinet.model.Dish;
 import com.github.uinet.model.DishCategory;
 import com.github.uinet.utils.ConnectionCreator;
@@ -19,10 +18,7 @@ public class DishDAOImp implements DishDAO {
 
     private static final String SQL_SELECT_ALL_DISH = "SELECT * FROM dishes LIMIT ?, ?";
     private static final String SQL_SELECT_DISH_BY_ID ="SELECT * FROM dishes WHERE id=?";
-    private static final String SQL_DELETE_DISH = "DELETE FROM dishes WHERE id=?";
     private static final String SQL_SELECT_DISHES_BY_CATEGORY = "SELECT * FROM dishes WHERE category=? LIMIT ?, ?";
-    private static final String SQL_UPDATE_DISH = "UPDATE dishes SET price=?, name=?, description=?, category=? WHERE id=?";
-    private static final String SQL_CREATE_DISH = "INSERT INTO dishes (price, name, description, category) VALUES (?, ?, ?, ?)";
     private static final String SQL_GET_COUNT_OF_DISHES = "SELECT COUNT(id) AS row_count FROM dishes";
 
     private final Logger logger = LogManager.getLogger(DishDAO.class);

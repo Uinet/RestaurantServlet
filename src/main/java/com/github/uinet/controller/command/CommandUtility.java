@@ -1,6 +1,5 @@
 package com.github.uinet.controller.command;
 
-import com.github.uinet.dao.DishDAO;
 import com.github.uinet.model.UserRole;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
