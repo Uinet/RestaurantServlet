@@ -11,10 +11,6 @@ import java.util.List;
 public class OrderService {
     private final OrderDAOImp orderDAOImp = DAOFactory.getInstance().createOrderDao();
 
-    public List<Order> findAll() {
-        return orderDAOImp.findAll();
-    }
-
     public List<Order> findAll(int page, int recordsPerPage){
         return orderDAOImp.findAll(page, recordsPerPage);
     }

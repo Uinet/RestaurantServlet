@@ -1,6 +1,5 @@
 package com.github.uinet.controller;
 
-import com.github.uinet.controller.command.ExceptionCommand;
 import com.github.uinet.controller.command.*;
 
 import javax.servlet.ServletException;

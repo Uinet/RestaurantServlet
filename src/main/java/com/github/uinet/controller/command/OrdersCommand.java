@@ -2,14 +2,20 @@ package com.github.uinet.controller.command;
 
 import com.github.uinet.services.OrderDishService;
 import com.github.uinet.services.OrderService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class OrdersCommand implements Command{
+    private final Logger logger = LogManager.getLogger(OrdersCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) {
+
+        logger.info("Opening orders page");
 
         OrderService orderService = new OrderService();
 

@@ -1,9 +1,12 @@
 package com.github.uinet.dao.imp;
 
 import com.github.uinet.dao.DishDAO;
+import com.github.uinet.dao.UserDAO;
 import com.github.uinet.model.Dish;
 import com.github.uinet.model.DishCategory;
 import com.github.uinet.utils.ConnectionCreator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +24,8 @@ public class DishDAOImp implements DishDAO {
     private static final String SQL_UPDATE_DISH = "UPDATE dishes SET price=?, name=?, description=?, category=? WHERE id=?";
     private static final String SQL_CREATE_DISH = "INSERT INTO dishes (price, name, description, category) VALUES (?, ?, ?, ?)";
     private static final String SQL_GET_COUNT_OF_DISHES = "SELECT COUNT(id) AS row_count FROM dishes";
+
+    private final Logger logger = LogManager.getLogger(DishDAO.class);
 
     private Dish extractFromResultSet(ResultSet resultSet) throws SQLException {
         return Dish.builder()
@@ -49,8 +54,8 @@ public class DishDAOImp implements DishDAO {
                 dish = extractFromResultSet(rs);
             }
 
-        }catch (SQLException ex){
-            throw new RuntimeException(ex);
+        }catch (SQLException e){
+            logger.error("Find dish by id exception", e);
         }
         return dish;
     }
@@ -73,7 +78,7 @@ public class DishDAOImp implements DishDAO {
                 resultList.add(result);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error("Find all dishes exception", e);
         }
         return resultList;
     }
@@ -99,8 +104,8 @@ public class DishDAOImp implements DishDAO {
                 result.add(extractFromResultSet(rs));
             }
 
-        }catch (SQLException ex){
-            throw new RuntimeException();
+        }catch (SQLException e){
+            logger.error("Find all dishes by category exception", e);
         }
         return result;
     }
@@ -114,8 +119,8 @@ public class DishDAOImp implements DishDAO {
                 result = resultSet.getInt("row_count");
             }
         }
-        catch (SQLException exception){
-            throw new RuntimeException();
+        catch (SQLException e){
+            logger.error("Get dishes count exception", e);
         }
         return result;
     }
@@ -137,15 +142,15 @@ public class DishDAOImp implements DishDAO {
                 resultList.add(result);
             }
 
-        } catch (SQLException exception){
-            throw new RuntimeException();
+        } catch (SQLException e){
+            logger.error("Get sorted dishes list exception", e);
         }
         finally {
             try {
                 connection.close();
                 statement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("Connection closing error", e);
             }
         }
         return resultList;

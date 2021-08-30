@@ -1,10 +1,13 @@
 package com.github.uinet.dao.imp;
 
 import com.github.uinet.dao.OrderDAO;
+import com.github.uinet.dao.UserDAO;
 import com.github.uinet.model.Order;
 import com.github.uinet.model.OrderStatus;
 import com.github.uinet.model.User;
 import com.github.uinet.utils.ConnectionCreator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,6 +26,8 @@ public class OrderDAOImp implements OrderDAO {
     private static final String SQL_CHANGE_ORDER_STATUS_TO_PAID = "UPDATE orders SET status='PAID' WHERE id=?";
     private static final String SQL_INCREASE_ADMIN_MONEY = "UPDATE users SET money=money+? WHERE role='MANAGER' LIMIT 1";
     private static final String SQL_REDUCE_CUSTOMER_MONEY = "UPDATE users SET money=money-? WHERE id=?";
+
+    private final Logger logger = LogManager.getLogger(OrderDAO.class);
 
     private Order extractFromResultSet(ResultSet resultSet) throws SQLException {
         return Order.builder()
@@ -44,7 +49,7 @@ public class OrderDAOImp implements OrderDAO {
                 entity.setId(rs.getLong(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Create new order exception", e);
         }
 
         return entity;
@@ -61,26 +66,15 @@ public class OrderDAOImp implements OrderDAO {
                 order = extractFromResultSet(rs);
             }
 
-        }catch (SQLException ex){
-            throw new RuntimeException(ex);
+        }catch (SQLException e){
+            logger.error("Find order by id exception", e);
         }
         return order;
     }
 
     @Override
     public List<Order> findAll() {
-        List<Order> resultList = new ArrayList<>();
-        try (Connection connection = ConnectionCreator.createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_ORDERS)){
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while ( resultSet.next() ){
-                Order result = extractFromResultSet(resultSet);
-                resultList.add(result);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return resultList;
+        return null;
     }
 
     @Override
@@ -96,7 +90,7 @@ public class OrderDAOImp implements OrderDAO {
                 resultList.add(result);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error("Find all orders exception", e);
         }
         return resultList;
     }
@@ -110,8 +104,8 @@ public class OrderDAOImp implements OrderDAO {
             preparedStatement.setLong(3, entity.getId());
             preparedStatement.executeUpdate();
 
-        }catch (SQLException ex){
-            throw new RuntimeException(ex);
+        }catch (SQLException e){
+            logger.error("Order update exception", e);
         }
     }
 
@@ -132,8 +126,8 @@ public class OrderDAOImp implements OrderDAO {
                 result.add(extractFromResultSet(rs));
             }
 
-        }catch (SQLException ex){
-            throw new RuntimeException();
+        }catch (SQLException e){
+            logger.error("Find all orders by user id exception", e);
         }
         return result;
     }
@@ -147,8 +141,8 @@ public class OrderDAOImp implements OrderDAO {
                 result = resultSet.getInt("row_count");
             }
         }
-        catch (SQLException exception){
-            throw new RuntimeException();
+        catch (SQLException e){
+            logger.error("Get orders count exception", e);
         }
         return result;
     }
@@ -163,8 +157,8 @@ public class OrderDAOImp implements OrderDAO {
                 result = resultSet.getInt("row_count");
             }
         }
-        catch (SQLException exception){
-            throw new RuntimeException();
+        catch (SQLException e){
+            logger.error("Get orders count by user exception", e);
         }
         return result;
     }
@@ -193,7 +187,7 @@ public class OrderDAOImp implements OrderDAO {
 
             connection.commit();
 
-        } catch (Exception ex){
+        } catch (SQLException ex){
             try {
                 connection.rollback();
             } catch (SQLException e) {
@@ -207,7 +201,7 @@ public class OrderDAOImp implements OrderDAO {
                 connection.close();
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("Error closing connection", e);
             }
         }
     }

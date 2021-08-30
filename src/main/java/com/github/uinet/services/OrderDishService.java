@@ -15,7 +15,7 @@ public class OrderDishService {
         return orderDishDAOImp.findByOrderId(orderId);
     }
 
-    public void addDishesToOrder(List<OrderDish> orderDishes, Order order) throws SQLIntegrityConstraintViolationException {
+    public void addDishesToOrder(List<OrderDish> orderDishes, Order order){
         System.out.println(order);
         for (OrderDish orderDish: orderDishes) {
             System.out.println(order);

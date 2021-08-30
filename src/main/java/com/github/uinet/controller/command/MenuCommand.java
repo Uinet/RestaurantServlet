@@ -1,8 +1,11 @@
 package com.github.uinet.controller.command;
 
+import com.github.uinet.dao.DishDAO;
 import com.github.uinet.model.DishCategory;
 import com.github.uinet.model.OrderDish;
 import com.github.uinet.services.DishService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,8 +15,13 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class MenuCommand implements Command{
+    private final Logger logger = LogManager.getLogger(MenuCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) {
+
+        logger.info("Opening menu page");
+
         DishService dishService = new DishService();
         HttpSession session = request.getSession();
 

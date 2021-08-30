@@ -3,6 +3,8 @@ package com.github.uinet.dao.imp;
 import com.github.uinet.dao.OrderDishDAO;
 import com.github.uinet.model.OrderDish;
 import com.github.uinet.utils.ConnectionCreator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ public class OrderDishDAOImp implements OrderDishDAO {
     private static final String SQL_UPDATE_ORDER_DISH = "UPDATE order_dishes SET quantities=?, dish_id=?, order_id=? WHERE id=?";
     private static final String SQL_SELECT_ALL_ORDER_DISH_BY_ORDER = "SELECT * FROM order_dishes where order_id=?";
 
+    private final Logger logger = LogManager.getLogger(OrderDishDAO.class);
+
     private OrderDish extractFromResultSet(ResultSet resultSet) throws SQLException {
         return OrderDish.builder()
                 .id(resultSet.getLong("id"))
@@ -24,7 +28,7 @@ public class OrderDishDAOImp implements OrderDishDAO {
     }
 
     @Override
-    public OrderDish create(OrderDish entity) throws SQLIntegrityConstraintViolationException  {
+    public OrderDish create(OrderDish entity){
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_ORDER_DISH, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setInt(1, entity.getQuantities());
@@ -36,9 +40,7 @@ public class OrderDishDAOImp implements OrderDishDAO {
                 entity.setId(rs.getLong(1));
             }
         } catch (SQLException ex) {
-            if(ex.getClass().equals(SQLIntegrityConstraintViolationException.class)){
-                throw new SQLIntegrityConstraintViolationException(ex);
-            }
+            logger.error("OrderDish create sql exception", ex);
         }
 
         return entity;
@@ -70,7 +72,7 @@ public class OrderDishDAOImp implements OrderDishDAO {
             preparedStatement.executeUpdate();
 
         }catch (SQLException ex){
-            throw new RuntimeException(ex);
+            logger.error("OrderDish update sql exception", ex);
         }
     }
 
@@ -93,7 +95,7 @@ public class OrderDishDAOImp implements OrderDishDAO {
             }
 
         }catch (SQLException ex){
-            throw new RuntimeException();
+            logger.error("Find OrderDishes by order id exception", ex);
         }
         return result;
     }

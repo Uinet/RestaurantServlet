@@ -4,11 +4,14 @@ import com.github.uinet.exception.UserException;
 import com.github.uinet.model.User;
 import com.github.uinet.model.UserRole;
 import com.github.uinet.services.UserService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 
 public class RegistrationCommand implements Command{
+    private final Logger logger = LogManager.getLogger(RegistrationCommand.class);
     @Override
     public String execute(HttpServletRequest request) {
         String name = request.getParameter("name");
@@ -24,12 +27,12 @@ public class RegistrationCommand implements Command{
                     .password(password)
                     .money(new BigDecimal("0.0"))
                     .build());
+            logger.info("User " + username + " was created");
         } catch (UserException e) {
             request.setAttribute("UserIsExist", true);
-            e.printStackTrace();
+            logger.error("User " + username + " is exist error", e);
         }
 
-        //Todo Registration Error
         return "/registration.jsp";
     }
 }

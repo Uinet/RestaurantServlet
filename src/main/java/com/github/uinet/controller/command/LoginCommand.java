@@ -1,12 +1,16 @@
 package com.github.uinet.controller.command;
 
+import com.github.uinet.dao.DishDAO;
 import com.github.uinet.model.User;
 import com.github.uinet.model.UserRole;
 import com.github.uinet.services.UserService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class LoginCommand implements Command{
+    private final Logger logger = LogManager.getLogger(LoginCommand.class);
     @Override
     public String execute(HttpServletRequest request) {
         String username = request.getParameter("username");
@@ -23,6 +27,7 @@ public class LoginCommand implements Command{
         //TODO password_encryption
         if(user != null && user.getPassword().equals(password)){
             role = user.getRole();
+            logger.info("User " + user.getUsername() + " was logged in");
         }
 
         CommandUtility.setUserRole(request, role, username);

@@ -8,12 +8,16 @@ import com.github.uinet.utils.ConnectionCreator;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class UserDAOImp implements UserDAO {
 
     private static final String SQL_SELECT_USER_BY_USERNAME = "SELECT * FROM users WHERE username=?";
     private static final String SQL_SELECT_ALL_USER = "SELECT * FROM users";
     private static final String SQL_CREATE_USER = "INSERT INTO users (name, password, username, money, role) VALUES (?, ?, ?, ?, ?)";
+
+    private final Logger logger = LogManager.getLogger(UserDAO.class);
 
     private User extractFromResultSet(ResultSet resultSet) throws SQLException {
         return User.builder()
@@ -36,7 +40,7 @@ public class UserDAOImp implements UserDAO {
                 user = extractFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Get user by username sql exception", e);
         }
         return user;
     }
@@ -56,7 +60,7 @@ public class UserDAOImp implements UserDAO {
                 entity.setId(rs.getLong(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Create new user sql exception", e);
         }
 
         return entity;
@@ -77,8 +81,8 @@ public class UserDAOImp implements UserDAO {
                 User result = extractFromResultSet(resultSet);
                 resultList.add(result);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            logger.error("Find all users sql exception", e);
         }
         return resultList;
     }
