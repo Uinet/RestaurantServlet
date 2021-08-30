@@ -26,10 +26,15 @@ public class MenuCommand implements Command{
 
         if(request.getParameter("category") != null){
             request.setAttribute("dishes",
-                    dishService.findAllByCategory(DishCategory.valueOf(request.getParameter("category")), page, recordsPerPage));
+                    dishService.findAllByCategory(DishCategory.valueOf(request.getParameter("category")),
+                            page, recordsPerPage));
+        } else if(request.getParameter("sortField") != null && request.getParameter("sortDirection") != null){
+                request.setAttribute("dishes", dishService.getSortedDishes(request.getParameter("sortField"),
+                        request.getParameter("sortDirection")));
         } else {
             request.setAttribute("dishes", dishService.findAllDish(page, recordsPerPage));
         }
+
 
         List<OrderDish> orderDishes = (List<OrderDish>) session.getAttribute("orderDishes");
         if(orderDishes != null){

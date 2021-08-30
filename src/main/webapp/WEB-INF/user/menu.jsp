@@ -37,12 +37,12 @@
                     Sort by
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuSortButton">
-                    <li><a class="dropdown-item">Name Asc</a></li>
-                    <li><a class="dropdown-item">Name Desc</a></li>
-                    <li><a class="dropdown-item">Price Asc</a></li>
-                    <li><a class="dropdown-item">Price Desc</a></li>
-                    <li><a class="dropdown-item">Category Asc</a></li>
-                    <li><a class="dropdown-item">Category Desc</a></li>
+                    <li><a class="dropdown-item" href="/api/app/user/menu?sortField=name&sortDirection=ASC">Name Asc</a></li>
+                    <li><a class="dropdown-item" href="/api/app/user/menu?sortField=name&sortDirection=DESC">Name Desc</a></li>
+                    <li><a class="dropdown-item" href="/api/app/user/menu?sortField=price&sortDirection=ASC">Price Asc</a></li>
+                    <li><a class="dropdown-item" href="/api/app/user/menu?sortField=price&sortDirection=DESC">Price Desc</a></li>
+                    <li><a class="dropdown-item" href="/api/app/user/menu?sortField=category&sortDirection=ASC">Category Asc</a></li>
+                    <li><a class="dropdown-item" href="/api/app/user/menu?sortField=category&sortDirection=DESC">Category Desc</a></li>
                 </ul>
             </div>
         </div>

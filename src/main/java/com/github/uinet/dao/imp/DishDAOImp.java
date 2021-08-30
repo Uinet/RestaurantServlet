@@ -119,4 +119,35 @@ public class DishDAOImp implements DishDAO {
         }
         return result;
     }
+
+    public List<Dish> getSortedDishes(String sortField, String sortDirection) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        List<Dish> resultList = new ArrayList<>();
+        try {
+            connection = ConnectionCreator.createConnection();
+            StringBuilder sqlQuery = new StringBuilder("SELECT * FROM dishes ORDER BY ")
+                    .append(sortField)
+                    .append(" ")
+                    .append(sortDirection);
+            statement = connection.prepareStatement(sqlQuery.toString());
+            ResultSet resultSet = statement.executeQuery();
+            while ( resultSet.next() ){
+                Dish result = extractFromResultSet(resultSet);
+                resultList.add(result);
+            }
+
+        } catch (SQLException exception){
+            throw new RuntimeException();
+        }
+        finally {
+            try {
+                connection.close();
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return resultList;
+    }
 }
