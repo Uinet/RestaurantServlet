@@ -8,16 +8,22 @@ import com.github.uinet.model.OrderDish;
 import java.util.List;
 
 public class OrderDishService {
-    private final OrderDishDAOImp orderDishDAOImp = DAOFactory.getInstance().createOrderDishDao();
+    private final OrderDishDAOImp orderDishDAOImp;
+
+    public OrderDishService(){
+        orderDishDAOImp = DAOFactory.getInstance().createOrderDishDao();
+    }
+
+    public OrderDishService(OrderDishDAOImp orderDishDAOImp){
+        this.orderDishDAOImp = orderDishDAOImp;
+    }
 
     public List<OrderDish> getOrderDishesByOrderId(long orderId){
         return orderDishDAOImp.findByOrderId(orderId);
     }
 
     public void addDishesToOrder(List<OrderDish> orderDishes, Order order){
-        System.out.println(order);
         for (OrderDish orderDish: orderDishes) {
-            System.out.println(order);
             orderDish.setOrderId(order.getId());
             orderDishDAOImp.create(orderDish);
         }

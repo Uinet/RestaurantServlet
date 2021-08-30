@@ -8,7 +8,15 @@ import com.github.uinet.model.User;
 import java.util.Optional;
 
 public class UserService {
-    private final UserDAOImp userDAOImp = DAOFactory.getInstance().createUserDao();
+    private final UserDAOImp userDAOImp;
+
+    public UserService(){
+        userDAOImp = DAOFactory.getInstance().createUserDao();
+    }
+
+    public UserService(UserDAOImp userDAOImp){
+        this.userDAOImp = userDAOImp;
+    }
 
     public User loadUserByUsername(String username){
         return userDAOImp.getUserByUsername(username);

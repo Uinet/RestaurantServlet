@@ -9,7 +9,15 @@ import com.github.uinet.model.User;
 import java.util.List;
 
 public class OrderService {
-    private final OrderDAOImp orderDAOImp = DAOFactory.getInstance().createOrderDao();
+    private final OrderDAOImp orderDAOImp;
+
+    public OrderService(){
+        orderDAOImp = DAOFactory.getInstance().createOrderDao();
+    }
+
+    public OrderService(OrderDAOImp orderDAOImp){
+        this.orderDAOImp = orderDAOImp;
+    }
 
     public List<Order> findAll(int page, int recordsPerPage){
         return orderDAOImp.findAll(page, recordsPerPage);

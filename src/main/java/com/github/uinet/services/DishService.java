@@ -9,7 +9,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DishService {
-    private final DishDAOImp dishDAOImp = DAOFactory.getInstance().createDishDao();
+    private final DishDAOImp dishDAOImp;
+
+    public DishService(){
+        dishDAOImp = DAOFactory.getInstance().createDishDao();
+    }
+
+    public DishService(DishDAOImp dishDAOImp){
+        this.dishDAOImp = dishDAOImp;
+    }
 
     public Dish findDishById(long id){
         return dishDAOImp.findById(id);
