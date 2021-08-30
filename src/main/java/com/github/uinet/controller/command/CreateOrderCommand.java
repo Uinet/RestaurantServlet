@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class CreateOrderCommand implements Command{
                 .customerId(new UserService()
                         .loadUserByUsername((String) session.getServletContext().getAttribute("username")).getId())
                 .status(OrderStatus.NEW)
+                .creationDate(LocalDateTime.now())
                 .build());
 
         List<OrderDish> orderDishList = (List<OrderDish>) session.getAttribute("orderDishes");

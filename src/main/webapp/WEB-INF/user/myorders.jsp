@@ -35,7 +35,7 @@
                     <tr>
                         <th scope="row">${order.getId()}</th>
                         <th>${order.getStatus()}</th>
-                        <th></th>
+                        <th>${order.getCreationDateTime()}</th>
                         <th>
                             <ul>
                                 <c:forEach var="orderDish" items="${orderDishService.getOrderDishesByOrderId(order.getId())}">

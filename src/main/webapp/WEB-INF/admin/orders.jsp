@@ -38,7 +38,7 @@
                 <tr>
                     <th scope="row">${order.getId()}</th>
                     <th>${order.getStatus()}</th>
-                    <th></th>
+                    <th>${order.getCreationDateTime()}</th>
                     <th>${order.getCustomerId()}</th>
                     <th>
                         <ul>

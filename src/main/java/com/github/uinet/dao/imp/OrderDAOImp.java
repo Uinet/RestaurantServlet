@@ -9,6 +9,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class OrderDAOImp implements OrderDAO {
 
     private static final String SQL_SELECT_ALL_ORDERS_BY_USER = "SELECT * FROM orders WHERE user_id=? ORDER BY id DESC LIMIT ?, ?";
     private static final String SQL_SELECT_ORDER_BY_ID ="SELECT * FROM orders WHERE id=?";
-    private static final String SQL_CREATE_ORDER = "INSERT INTO orders (status, user_id) VALUES (?, ?)";
-    private static final String SQL_UPDATE_ORDER = "UPDATE orders SET status=?, user_id=? WHERE id=?";
+    private static final String SQL_CREATE_ORDER = "INSERT INTO orders (status, user_id, creation_date) VALUES (?, ?, ?)";
+    private static final String SQL_UPDATE_ORDER = "UPDATE orders SET status=?, user_id=?, creation_date=? WHERE id=?";
     private static final String SQL_SELECT_PAGINATION_ORDERS = "SELECT * FROM orders ORDER BY id DESC LIMIT ?, ?";
     private static final String SQL_GET_COUNT_OF_ORDERS = "SELECT COUNT(id) AS row_count FROM orders";
     private static final String SQL_GET_COUNT_OF_ORDERS_BY_USER = "SELECT COUNT(id) AS row_count FROM orders WHERE user_id=?";
@@ -32,6 +33,7 @@ public class OrderDAOImp implements OrderDAO {
                 .customerId(resultSet.getLong("user_id"))
                 .id(resultSet.getLong("id"))
                 .status(OrderStatus.valueOf(resultSet.getString("status")))
+                .creationDate(resultSet.getObject("creation_date", LocalDateTime.class))
                 .build();
     }
 
@@ -41,6 +43,7 @@ public class OrderDAOImp implements OrderDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_ORDER, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setString(1, entity.getStatus().toString());
             preparedStatement.setLong(2, entity.getCustomerId());
+            preparedStatement.setObject(3, entity.getCreationDateTime());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if(rs.next()){
@@ -99,7 +102,8 @@ public class OrderDAOImp implements OrderDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ORDER)){
             preparedStatement.setString(1,entity.getStatus().toString());
             preparedStatement.setLong(2, entity.getCustomerId());
-            preparedStatement.setLong(3, entity.getId());
+            preparedStatement.setObject(3, entity.getCreationDateTime());
+            preparedStatement.setLong(4, entity.getId());
             preparedStatement.executeUpdate();
 
         }catch (SQLException e){

@@ -3,11 +3,13 @@ package com.github.uinet.model;
 import com.github.uinet.services.OrderDishService;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class Order {
     private long id;
     private long customerId;
     private OrderStatus status;
+    private LocalDateTime creationDateTime;
 
     public long getId() {
         return id;
@@ -31,6 +33,14 @@ public class Order {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public LocalDateTime getCreationDateTime() {
+        return creationDateTime;
+    }
+
+    public void setCreationDateTime(LocalDateTime creationDateTime) {
+        this.creationDateTime = creationDateTime;
     }
 
     public BigDecimal getSum(){
@@ -60,6 +70,11 @@ public class Order {
 
         public Builder status(OrderStatus orderStatus){
             order.setStatus(orderStatus);
+            return this;
+        }
+
+        public Builder creationDate(LocalDateTime creationDate){
+            order.setCreationDateTime(creationDate);
             return this;
         }
 
