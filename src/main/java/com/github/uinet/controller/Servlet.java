@@ -29,6 +29,7 @@ public class Servlet extends HttpServlet {
         commands.put("user/removeFromCart", new RemoveFromCartCommand());
         commands.put("user/reduceQuantities", new ReduceFromCartCommand());
         commands.put("user/myorders/pay", new PayCommand());
+        commands.put("admin/users/replenishment", new ReplenishmentCommand());
     }
 
     @Override

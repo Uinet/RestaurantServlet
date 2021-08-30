@@ -22,11 +22,11 @@
 <table class="table">
     <thead>
     <tr>
-        <th scope="col"><fmt:message key="my.orders.table.id" /></th>
-        <th scope="col"><fmt:message key="my.orders.table.status" /></th>
-        <th scope="col"><fmt:message key="my.orders.table.date" /></th>
-        <th scope="col"><fmt:message key="my.orders.table.dishes" /></th>
-        <th scope="col"><fmt:message key="my.orders.table.sum" /></th>
+        <th scope="col"><fmt:message key="users.table.id" /></th>
+        <th scope="col"><fmt:message key="users.table.name" /></th>
+        <th scope="col"><fmt:message key="users.table.username" /></th>
+        <th scope="col"><fmt:message key="users.table.role" /></th>
+        <th scope="col"><fmt:message key="users.table.money" /></th>
         <th></th>
     </tr>
     </thead>
@@ -38,6 +38,13 @@
                 <td>${user.getUsername()}</td>
                 <td>${user.getRole()}</td>
                 <td>${user.getMoney()}</td>
+                <td>
+                    <form method="post" action="/api/app/admin/users/replenishment">
+                        <input type="number" id="money" step="0.01" min="0" name="money" placeholder="0.0"></input>
+                        <input type="hidden" value="${user.getId()}" id="userId" name="userId">
+                        <button type="submit" class="btn btn-primary"><fmt:message key="users.table.top_up_balance" /></button>
+                    </form>
+                </td>
             </tr>
         </c:forEach>
     </tbody>

@@ -5,6 +5,7 @@ import com.github.uinet.model.User;
 import com.github.uinet.model.UserRole;
 import com.github.uinet.utils.ConnectionCreator;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class UserDAOImp implements UserDAO {
     private static final String SQL_SELECT_USER_BY_USERNAME = "SELECT * FROM users WHERE username=?";
     private static final String SQL_SELECT_ALL_USER = "SELECT * FROM users";
     private static final String SQL_CREATE_USER = "INSERT INTO users (name, password, username, money, role) VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_TOP_UP_USER_BALANCE = "UPDATE users SET money=money+? WHERE id=?";
 
     private final Logger logger = LogManager.getLogger(UserDAO.class);
 
@@ -100,5 +102,17 @@ public class UserDAOImp implements UserDAO {
     @Override
     public void delete(User entity) {
 
+    }
+
+    public void topUpBalance(long userId, BigDecimal sum) {
+        try(Connection connection = ConnectionCreator.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_TOP_UP_USER_BALANCE)){
+            preparedStatement.setBigDecimal(1, sum);
+            preparedStatement.setLong(2, userId);
+            preparedStatement.executeUpdate();
+
+        }catch (SQLException e){
+            logger.error("Order update exception", e);
+        }
     }
 }

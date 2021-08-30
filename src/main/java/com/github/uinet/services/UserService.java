@@ -5,6 +5,7 @@ import com.github.uinet.dao.imp.UserDAOImp;
 import com.github.uinet.exception.UserException;
 import com.github.uinet.model.User;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public class UserService {
@@ -32,5 +33,9 @@ public class UserService {
 
     public User loadUserById(long userId) {
         return userDAOImp.findById(userId);
+    }
+
+    public void topUpBalance(long userId, BigDecimal sum) {
+        userDAOImp.topUpBalance(userId, sum);
     }
 }
