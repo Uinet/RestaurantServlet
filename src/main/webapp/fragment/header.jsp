@@ -5,8 +5,7 @@
 <c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${lang}" />
 <fmt:setBundle basename = "messages" />
-<html lang="${lang}">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example" lang="${lang}">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Restaurant</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,18 +26,17 @@
                 </ul>
                 <div class="text-end">
                     <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                   aria-expanded="false">
+                        <div class="navbar-nav">
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink">
                                     ENG
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <ul class="dropdown-menu dropdown-menu-dark" id="navbarDropdownLang">
                                     <li><a href="?lang=en" class="dropdown-item">Eng</a></li>
                                     <li><a href="?lang=ua" class="dropdown-item">Ua</a></li>
                                 </ul>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                     </div>
                     <c:choose>
                         <c:when test="${sessionScope.role eq 'GUEST'}">
@@ -53,4 +51,20 @@
             </div>
         </div>
     </nav>
-</html>
+    <script>
+        {
+            const navButton = document.querySelector('#navbarDarkDropdownMenuLink');
+            const dropdown = document.querySelector("#navbarDropdownLang");
+            window.addEventListener("load", () => {
+                navButton.addEventListener("click", () => {
+                    dropdown.classList.toggle("show");
+                });
+            });
+            document.body.addEventListener("click", (e) => {
+                if(e.target.parentElement != document.querySelector(".dropdown")){
+                    dropdown.classList.remove("show");
+                }
+            });
+        }
+
+    </script>

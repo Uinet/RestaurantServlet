@@ -5,6 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ldtf" uri="/WEB-INF/dateFormatterTag.tld" %>
 <%@ page isELIgnored="false" %>
 <c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${lang}" />
@@ -35,7 +36,7 @@
                     <tr>
                         <th scope="row">${order.getId()}</th>
                         <th>${order.getStatus()}</th>
-                        <th>${order.getCreationDateTime()}</th>
+                        <th><ldtf:Formatter localDateTime="${order.getCreationDateTime()}"></ldtf:Formatter></th>
                         <th>
                             <ul>
                                 <c:forEach var="orderDish" items="${orderDishService.getOrderDishesByOrderId(order.getId())}">

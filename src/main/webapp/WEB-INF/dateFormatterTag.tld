@@ -1,0 +1,16 @@
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>Local DateTimeFormatter</short-name>
+    <tag>
+        <name>Formatter</name>
+        <tag-class>com.github.uinet.tags.DateFormatterTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>localDateTime</name>
+            <required>true</required>
+            <type>java.time.LocalDateTime</type>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>
