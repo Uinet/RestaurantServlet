@@ -1,6 +1,5 @@
 package com.github.uinet.controller.command;
 
-import com.github.uinet.dao.DishDAO;
 import com.github.uinet.model.DishCategory;
 import com.github.uinet.model.OrderDish;
 import com.github.uinet.services.DishService;

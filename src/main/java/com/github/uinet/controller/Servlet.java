@@ -49,13 +49,10 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        System.out.println(path);
         path = path.replaceAll( regexPatch, "");
-        System.out.println(path);
         Command command = commands.getOrDefault(path,
                 (r)->"/index.jsp)");
         String page = command.execute(request);
-        System.out.println(page);
         if(page.contains("redirect:")){
             response.sendRedirect(page.replace("redirect:", "/api"));
         }else {
