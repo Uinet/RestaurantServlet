@@ -1,6 +1,7 @@
 package com.github.uinet.services;
 
 import com.github.uinet.dao.imp.OrderDishDAOImp;
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.Order;
 import com.github.uinet.model.OrderDish;
 import org.junit.Before;
@@ -38,7 +39,7 @@ public class OrderDishServiceTest {
     }
 
     @Test
-    public void getOrderDishesByOrderId() {
+    public void getOrderDishesByOrderId() throws DAOException {
         List<OrderDish> orderDishList = new ArrayList<>();
         when(orderDishDAOImp.findByOrderId(orderDish.getOrderId())).thenReturn(orderDishList);
 

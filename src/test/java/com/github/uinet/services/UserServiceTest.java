@@ -1,6 +1,7 @@
 package com.github.uinet.services;
 
 import com.github.uinet.dao.imp.UserDAOImp;
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.exception.UserException;
 import com.github.uinet.model.User;
 import com.github.uinet.model.UserRole;
@@ -38,7 +39,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void loadUserByUsername() {
+    public void loadUserByUsername() throws DAOException {
         String username = "TestUsername";
         when(userDAOImp.getUserByUsername(username)).thenReturn(user);
 
@@ -47,7 +48,7 @@ public class UserServiceTest {
 
 
     @Test(expected = UserException.class)
-    public void registerNewUser() throws UserException {
+    public void registerNewUser() throws UserException, DAOException {
         when(userDAOImp.create(user)).thenThrow();
         userService.registerNewUser(user);
     }

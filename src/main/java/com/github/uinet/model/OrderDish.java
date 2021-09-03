@@ -1,5 +1,6 @@
 package com.github.uinet.model;
 
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.services.DishService;
 
 import java.math.BigDecimal;
@@ -34,7 +35,7 @@ public class OrderDish {
         this.dishId = dishId;
     }
 
-    public Dish getDish() {
+    public Dish getDish(){
         return new DishService().findDishById(dishId);
     }
 

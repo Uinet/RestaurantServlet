@@ -1,5 +1,6 @@
 package com.github.uinet.controller.command;
 
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.OrderStatus;
 import com.github.uinet.services.OrderService;
 import org.apache.log4j.LogManager;
@@ -13,8 +14,12 @@ public class ChangeStatusCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
 
-        new OrderService().changeStatus(Long.parseLong(request.getParameter("orderId")),
-                OrderStatus.valueOf(request.getParameter("status").toUpperCase()));
+        try {
+            new OrderService().changeStatus(Long.parseLong(request.getParameter("orderId")),
+                    OrderStatus.valueOf(request.getParameter("status").toUpperCase()));
+        } catch (DAOException e) {
+            logger.error("Error of order status changed", e);
+        }
 
 
         logger.info("The status of order number " +

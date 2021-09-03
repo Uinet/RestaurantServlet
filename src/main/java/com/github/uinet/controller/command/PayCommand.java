@@ -1,5 +1,6 @@
 package com.github.uinet.controller.command;
 
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.services.OrderService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -15,12 +16,11 @@ public class PayCommand implements Command{
 
         long orderId = Long.parseLong(request.getParameter("orderId"));
 
-        orderService.payOrder(orderService.findById(orderId));
-
-        logger.info("User " +
-                orderService.findById(orderId).getCustomerId() +
-                " paid for the order number" +
-                orderId);
+        try {
+            orderService.payOrder(orderService.findById(orderId));
+        } catch (DAOException e) {
+            logger.error("Payment error", e);
+        }
 
         return "redirect:/app/user/myorders";
     }

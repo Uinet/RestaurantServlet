@@ -1,6 +1,7 @@
 package com.github.uinet.dao.imp;
 
 import com.github.uinet.dao.OrderDishDAO;
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.OrderDish;
 import com.github.uinet.utils.ConnectionCreator;
 import org.apache.log4j.LogManager;
@@ -62,7 +63,7 @@ public class OrderDishDAOImp implements OrderDishDAO {
     }
 
     @Override
-    public void update(OrderDish entity) {
+    public void update(OrderDish entity) throws DAOException {
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ORDER_DISH);){
             preparedStatement.setInt(1, entity.getQuantities());
@@ -71,8 +72,9 @@ public class OrderDishDAOImp implements OrderDishDAO {
             preparedStatement.setLong(4, entity.getId());
             preparedStatement.executeUpdate();
 
-        }catch (SQLException ex){
-            logger.error("OrderDish update sql exception", ex);
+        }catch (SQLException e){
+            logger.error("OrderDish update sql exception", e);
+            throw new DAOException("OrderDish update sql exception", e);
         }
     }
 
@@ -84,7 +86,7 @@ public class OrderDishDAOImp implements OrderDishDAO {
     public void saveAll(List<OrderDish> collect) {
     }
 
-    public List<OrderDish> findByOrderId(long orderId) {
+    public List<OrderDish> findByOrderId(long orderId) throws DAOException {
         List<OrderDish> result = new ArrayList<>();
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_ORDER_DISH_BY_ORDER);){
@@ -94,8 +96,9 @@ public class OrderDishDAOImp implements OrderDishDAO {
                 result.add(extractFromResultSet(rs));
             }
 
-        }catch (SQLException ex){
-            logger.error("Find OrderDishes by order id exception", ex);
+        }catch (SQLException e){
+            logger.error("Find OrderDishes by order id exception", e);
+            throw new DAOException("Find OrderDishes by order id exception", e);
         }
         return result;
     }

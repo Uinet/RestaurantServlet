@@ -23,7 +23,6 @@ public class AuthFilter implements Filter {
         final HttpServletResponse res = (HttpServletResponse) response;
 
         HttpSession session = req.getSession();
-        ServletContext context = req.getSession().getServletContext();
 
         UserRole role = (UserRole) session.getAttribute("role");
         if(role == null){

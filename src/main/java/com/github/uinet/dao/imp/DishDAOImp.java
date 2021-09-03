@@ -1,6 +1,7 @@
 package com.github.uinet.dao.imp;
 
 import com.github.uinet.dao.DishDAO;
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.Dish;
 import com.github.uinet.model.DishCategory;
 import com.github.uinet.utils.ConnectionCreator;
@@ -40,7 +41,7 @@ public class DishDAOImp implements DishDAO {
     }
 
     @Override
-    public Dish findById(long dishId) {
+    public Dish findById(long dishId) throws DAOException {
         Dish dish = null;
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_DISH_BY_ID);){
@@ -51,7 +52,7 @@ public class DishDAOImp implements DishDAO {
             }
 
         }catch (SQLException e){
-            logger.error("Find dish by id exception", e);
+            throw new DAOException("Find dish by id exception", e);
         }
         return dish;
     }
@@ -62,7 +63,7 @@ public class DishDAOImp implements DishDAO {
     }
 
     @Override
-    public List<Dish> findAll(int page, int recordsPerPage) {
+    public List<Dish> findAll(int page, int recordsPerPage) throws DAOException {
         List<Dish> resultList = new ArrayList<>();
         try (Connection connection = ConnectionCreator.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_DISH)){
@@ -74,7 +75,7 @@ public class DishDAOImp implements DishDAO {
                 resultList.add(result);
             }
         } catch (Exception e) {
-            logger.error("Find all dishes exception", e);
+            throw new DAOException("Find all dishes exception", e);
         }
         return resultList;
     }
@@ -88,7 +89,7 @@ public class DishDAOImp implements DishDAO {
     public void delete(Dish entity) {
     }
 
-    public List<Dish> findAllByCategory(DishCategory dishCategory, int page, int recordsPerPage ) {
+    public List<Dish> findAllByCategory(DishCategory dishCategory, int page, int recordsPerPage ) throws DAOException {
         List<Dish> result = new ArrayList<>();
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_DISHES_BY_CATEGORY);){
@@ -101,12 +102,12 @@ public class DishDAOImp implements DishDAO {
             }
 
         }catch (SQLException e){
-            logger.error("Find all dishes by category exception", e);
+            throw new DAOException("Find all dishes by category exception", e);
         }
         return result;
     }
 
-    public int getNumberOfRows(){
+    public int getNumberOfRows() throws DAOException {
         int result = 0;
         try(Connection connection = ConnectionCreator.createConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_COUNT_OF_DISHES)){
@@ -116,12 +117,12 @@ public class DishDAOImp implements DishDAO {
             }
         }
         catch (SQLException e){
-            logger.error("Get dishes count exception", e);
+            throw new DAOException("Get dishes count exception", e);
         }
         return result;
     }
 
-    public List<Dish> getSortedDishes(String sortField, String sortDirection) {
+    public List<Dish> getSortedDishes(String sortField, String sortDirection) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         List<Dish> resultList = new ArrayList<>();
@@ -139,14 +140,14 @@ public class DishDAOImp implements DishDAO {
             }
 
         } catch (SQLException e){
-            logger.error("Get sorted dishes list exception", e);
+            throw new DAOException("Get sorted dishes list exception", e);
         }
         finally {
             try {
                 connection.close();
                 statement.close();
             } catch (SQLException e) {
-                logger.error("Connection closing error", e);
+                throw new DAOException("Connection closing error", e);
             }
         }
         return resultList;

@@ -1,5 +1,6 @@
 package com.github.uinet.controller.command;
 
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.User;
 import com.github.uinet.services.OrderDishService;
 import com.github.uinet.services.OrderService;
@@ -19,10 +20,15 @@ public class MyOrdersCommand implements Command{
         logger.info("Opening my orders page");
 
         OrderService orderService = new OrderService();
-        User user = new UserService().loadUserByUsername((String)request
-                        .getSession()
-                        .getServletContext()
-                        .getAttribute("username"));
+        User user = null;
+        try {
+            user = new UserService().loadUserByUsername((String)request
+                            .getSession()
+                            .getServletContext()
+                            .getAttribute("username"));
+        } catch (DAOException e) {
+            logger.error("Error loading user by username", e);
+        }
 
         int page = 1;
         int recordsPerPage = 5;
@@ -31,10 +37,19 @@ public class MyOrdersCommand implements Command{
             page = Integer.parseInt(request.getParameter("page"));
         }
 
-        request.setAttribute("orders", orderService.findAllByUser(user, page, recordsPerPage));
+        try {
+            request.setAttribute("orders", orderService.findAllByUser(user, page, recordsPerPage));
+        } catch (DAOException e) {
+            logger.error("Error loading user orders", e);
+        }
         request.setAttribute("orderDishService", new OrderDishService());
 
-        int nOfPages = orderService.getNumbersOfRowsByUser(user) / recordsPerPage;
+        int nOfPages = 0;
+        try {
+            nOfPages = orderService.getNumbersOfRowsByUser(user) / recordsPerPage;
+        } catch (DAOException e) {
+            logger.error("Error getting the number of rows", e);
+        }
         if (nOfPages % recordsPerPage > 0) {
             nOfPages++;
         }

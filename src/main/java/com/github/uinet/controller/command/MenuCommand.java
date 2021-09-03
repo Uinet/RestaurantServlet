@@ -1,5 +1,6 @@
 package com.github.uinet.controller.command;
 
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.DishCategory;
 import com.github.uinet.model.OrderDish;
 import com.github.uinet.services.DishService;
@@ -31,16 +32,21 @@ public class MenuCommand implements Command{
             page = Integer.parseInt(request.getParameter("page"));
         }
 
-        if(request.getParameter("category") != null){
-            request.setAttribute("dishes",
-                    dishService.findAllByCategory(DishCategory.valueOf(request.getParameter("category")),
-                            page, recordsPerPage));
-        } else if(request.getParameter("sortField") != null && request.getParameter("sortDirection") != null){
+        try {
+            if(request.getParameter("category") != null){
+                request.setAttribute("dishes",
+                        dishService.findAllByCategory(DishCategory.valueOf(request.getParameter("category")),
+                                page, recordsPerPage));
+            } else if(request.getParameter("sortField") != null && request.getParameter("sortDirection") != null){
                 request.setAttribute("dishes", dishService.getSortedDishes(request.getParameter("sortField"),
                         request.getParameter("sortDirection")));
-        } else {
-            request.setAttribute("dishes", dishService.findAllDish(page, recordsPerPage));
+            } else {
+                request.setAttribute("dishes", dishService.findAllDish(page, recordsPerPage));
+            }
+        } catch (DAOException e){
+            logger.error("Error loading menu from database", e);
         }
+
 
 
         List<OrderDish> orderDishes = (List<OrderDish>) session.getAttribute("orderDishes");
@@ -48,7 +54,12 @@ public class MenuCommand implements Command{
             session.setAttribute("orderSum", orderDishes.stream().map(OrderDish::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
         }
 
-        int nOfPages = dishService.getNumbersOfRows() / recordsPerPage;
+        int nOfPages = 0;
+        try {
+            nOfPages = dishService.getNumbersOfRows() / recordsPerPage;
+        } catch (DAOException e) {
+            logger.error("Error getting the number of rows", e);
+        }
         if (nOfPages % recordsPerPage > 0) {
             nOfPages++;
         }

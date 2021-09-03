@@ -1,6 +1,7 @@
 package com.github.uinet.dao.imp;
 
 import com.github.uinet.dao.OrderDAO;
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.Order;
 import com.github.uinet.model.OrderStatus;
 import com.github.uinet.model.User;
@@ -38,7 +39,7 @@ public class OrderDAOImp implements OrderDAO {
     }
 
     @Override
-    public Order create(Order entity) {
+    public Order create(Order entity) throws DAOException {
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_ORDER, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setString(1, entity.getStatus().toString());
@@ -51,13 +52,14 @@ public class OrderDAOImp implements OrderDAO {
             }
         } catch (SQLException e) {
             logger.error("Create new order exception", e);
+            throw new DAOException("Create new order exception", e);
         }
 
         return entity;
     }
 
     @Override
-    public Order findById(long orderId) {
+    public Order findById(long orderId) throws DAOException {
         Order order = null;
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ORDER_BY_ID);){
@@ -69,6 +71,7 @@ public class OrderDAOImp implements OrderDAO {
 
         }catch (SQLException e){
             logger.error("Find order by id exception", e);
+            throw new DAOException("Find order by id exception", e);
         }
         return order;
     }
@@ -79,7 +82,7 @@ public class OrderDAOImp implements OrderDAO {
     }
 
     @Override
-    public List<Order> findAll(int page, int recordsPerPage) {
+    public List<Order> findAll(int page, int recordsPerPage) throws DAOException {
         List<Order> resultList = new ArrayList<>();
         try (Connection connection = ConnectionCreator.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_PAGINATION_ORDERS)){
@@ -92,12 +95,13 @@ public class OrderDAOImp implements OrderDAO {
             }
         } catch (Exception e) {
             logger.error("Find all orders exception", e);
+            throw new DAOException("Find all orders exception",e);
         }
         return resultList;
     }
 
     @Override
-    public void update(Order entity) {
+    public void update(Order entity) throws DAOException {
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_ORDER)){
             preparedStatement.setString(1,entity.getStatus().toString());
@@ -108,6 +112,7 @@ public class OrderDAOImp implements OrderDAO {
 
         }catch (SQLException e){
             logger.error("Order update exception", e);
+            throw new DAOException("Order update exception",e);
         }
     }
 
@@ -116,7 +121,7 @@ public class OrderDAOImp implements OrderDAO {
 
     }
 
-    public List<Order> findAllByUserId(long id, int page, int recordsPerPage) {
+    public List<Order> findAllByUserId(long id, int page, int recordsPerPage) throws DAOException {
         List<Order> result = new ArrayList<>();
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_ORDERS_BY_USER);){
@@ -130,11 +135,12 @@ public class OrderDAOImp implements OrderDAO {
 
         }catch (SQLException e){
             logger.error("Find all orders by user id exception", e);
+            throw new DAOException("Find all orders by user id exception",e);
         }
         return result;
     }
 
-    public int getNumberOfRows(){
+    public int getNumberOfRows() throws DAOException {
         int result = 0;
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_COUNT_OF_ORDERS)){
@@ -145,11 +151,12 @@ public class OrderDAOImp implements OrderDAO {
         }
         catch (SQLException e){
             logger.error("Get orders count exception", e);
+            throw new DAOException("Get orders count exception",e);
         }
         return result;
     }
 
-    public int getNumberOfRowsByUser(User user) {
+    public int getNumberOfRowsByUser(User user) throws DAOException {
         int result = 0;
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_COUNT_OF_ORDERS_BY_USER)){
@@ -161,11 +168,12 @@ public class OrderDAOImp implements OrderDAO {
         }
         catch (SQLException e){
             logger.error("Get orders count by user exception", e);
+            throw new DAOException("Get orders count by user exception",e);
         }
         return result;
     }
 
-    public void payOrder(Order order){
+    public void payOrder(Order order) throws DAOException {
         Connection connection = null;
         PreparedStatement decreaseMoneyStatement = null;
         PreparedStatement increaseMoneyStatement = null;
@@ -193,7 +201,7 @@ public class OrderDAOImp implements OrderDAO {
             try {
                 connection.rollback();
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException("Connection rollback exception",e);
             }
         }finally {
             try {
@@ -204,6 +212,7 @@ public class OrderDAOImp implements OrderDAO {
 
             } catch (SQLException e) {
                 logger.error("Error closing connection", e);
+                throw new DAOException("Error closing connection",e);
             }
         }
     }

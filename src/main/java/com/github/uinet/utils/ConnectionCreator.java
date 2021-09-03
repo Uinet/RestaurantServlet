@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectionCreator {
 
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/restaurant_servlet_db?useUnicode=true&serverTimezone=UTC&useSSL=false";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/restaurant_servlet_db?useUnicode=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true";
     private static final String DATABASE_USER = "root";
     private static final String DATABASE_PASS = "password";
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";

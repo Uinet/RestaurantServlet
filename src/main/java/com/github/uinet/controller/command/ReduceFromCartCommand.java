@@ -1,5 +1,6 @@
 package com.github.uinet.controller.command;
 
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.OrderDish;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -20,7 +21,7 @@ public class ReduceFromCartCommand implements Command{
 
         List<OrderDish> orderDishList = (List<OrderDish>) session.getAttribute("orderDishes");
         Optional<OrderDish> orderDishOptional = orderDishList.stream()
-                .filter(orderDishes -> orderDishes.getDish().getId() == dishId)
+                .filter(orderDishes -> orderDishes.getDishId() == dishId)
                 .findFirst();
 
         if(orderDishOptional.isPresent()){

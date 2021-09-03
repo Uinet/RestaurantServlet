@@ -1,6 +1,7 @@
 package com.github.uinet.services;
 
 import com.github.uinet.dao.imp.DishDAOImp;
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.Dish;
 import com.github.uinet.model.DishCategory;
 import org.junit.Before;
@@ -37,7 +38,7 @@ public class DishServiceTest {
     }
 
     @Test
-    public void findDishById() {
+    public void findDishById() throws DAOException {
         when(dishDAOImp.findById(dish.getId())).thenReturn(dish);
         assertEquals(dish, dishService.findDishById(dish.getId()));
     }
@@ -51,7 +52,7 @@ public class DishServiceTest {
     }
 
     @Test
-    public void getNumbersOfRows() {
+    public void getNumbersOfRows() throws DAOException {
         when(dishDAOImp.getNumberOfRows()).thenReturn(10);
         assertEquals(10, dishService.getNumbersOfRows());
     }

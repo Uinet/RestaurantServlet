@@ -1,5 +1,6 @@
 package com.github.uinet.controller.command;
 
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.Order;
 import com.github.uinet.model.OrderDish;
 import com.github.uinet.model.OrderStatus;
@@ -20,12 +21,18 @@ public class CreateOrderCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Order order = new OrderService().save(Order.builder()
-                .customerId(new UserService()
-                        .loadUserByUsername((String) session.getServletContext().getAttribute("username")).getId())
-                .status(OrderStatus.NEW)
-                .creationDate(LocalDateTime.now())
-                .build());
+        Order order = null;
+
+        try {
+            order = new OrderService().save(Order.builder()
+                    .customerId(new UserService()
+                            .loadUserByUsername((String) session.getServletContext().getAttribute("username")).getId())
+                    .status(OrderStatus.NEW)
+                    .creationDate(LocalDateTime.now())
+                    .build());
+        } catch (DAOException e) {
+            logger.error("Order creation error", e);
+        }
 
         List<OrderDish> orderDishList = (List<OrderDish>) session.getAttribute("orderDishes");
         new OrderDishService().addDishesToOrder(orderDishList, order);

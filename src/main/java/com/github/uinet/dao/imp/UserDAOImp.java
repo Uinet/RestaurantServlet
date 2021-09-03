@@ -1,6 +1,7 @@
 package com.github.uinet.dao.imp;
 
 import com.github.uinet.dao.UserDAO;
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.model.User;
 import com.github.uinet.model.UserRole;
 import com.github.uinet.utils.ConnectionCreator;
@@ -43,12 +44,13 @@ public class UserDAOImp implements UserDAO {
             }
         } catch (SQLException e) {
             logger.error("Get user by username sql exception", e);
+            throw new DAOException("Get user by username sql exception", e);
         }
         return user;
     }
 
     @Override
-    public User create(User entity){
+    public User create(User entity) throws DAOException {
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_USER, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setString(1, entity.getName());
@@ -63,6 +65,7 @@ public class UserDAOImp implements UserDAO {
             }
         } catch (SQLException e) {
             logger.error("Create new user sql exception", e);
+            throw new DAOException("Create new user sql exception", e);
         }
 
         return entity;
@@ -74,7 +77,7 @@ public class UserDAOImp implements UserDAO {
     }
 
     @Override
-    public List<User> findAll() {
+    public List<User> findAll() throws DAOException {
         List<User> resultList = new ArrayList<>();
         try (Connection connection = ConnectionCreator.createConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL_USER)){
@@ -85,6 +88,7 @@ public class UserDAOImp implements UserDAO {
             }
         } catch (SQLException e) {
             logger.error("Find all users sql exception", e);
+            throw new DAOException("Find all users sql exception", e);
         }
         return resultList;
     }
@@ -104,7 +108,7 @@ public class UserDAOImp implements UserDAO {
 
     }
 
-    public void topUpBalance(long userId, BigDecimal sum) {
+    public void topUpBalance(long userId, BigDecimal sum) throws DAOException {
         try(Connection connection = ConnectionCreator.createConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_TOP_UP_USER_BALANCE)){
             preparedStatement.setBigDecimal(1, sum);
@@ -112,7 +116,8 @@ public class UserDAOImp implements UserDAO {
             preparedStatement.executeUpdate();
 
         }catch (SQLException e){
-            logger.error("Order update exception", e);
+            logger.error("User top up balance exception", e);
+            throw new DAOException("User top up balance exception", e);
         }
     }
 }

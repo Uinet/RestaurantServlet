@@ -2,6 +2,7 @@ package com.github.uinet.services;
 
 import com.github.uinet.dao.DAOFactory;
 import com.github.uinet.dao.imp.UserDAOImp;
+import com.github.uinet.exception.DAOException;
 import com.github.uinet.exception.UserException;
 import com.github.uinet.model.User;
 
@@ -35,7 +36,7 @@ public class UserService {
         return userDAOImp.findById(userId);
     }
 
-    public void topUpBalance(long userId, BigDecimal sum) {
+    public void topUpBalance(long userId, BigDecimal sum) throws DAOException {
         userDAOImp.topUpBalance(userId, sum);
     }
 }
